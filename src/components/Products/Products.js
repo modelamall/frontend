@@ -4,24 +4,19 @@ import useFetch from "../../hooks/UseFetch";
 import { useEffect } from "react";
 
 const Products = () => {
-    const { data, loading, error } = useFetch("product/all");
-    const { product, setProduct } = useContext(ProductContext);
-    if (!loading) {
-        setProduct(data.data);
-        console.log(product);
-      }
-  useEffect(() => {
-    
-  }, []);
+  const { data, loading, error } = useFetch("product/all");
+  const { product, setProduct } = useContext(ProductContext);
+  if (!loading) {
+    setProduct(data.data);
+    console.log(product);
+  }
+  useEffect(() => {}, []);
   return (
     <>
-    
-    {product?.map((item)=>{
-        return <h1>{item.title}</h1>
-
-    })}</>
-    
-
-  )
+      {product?.map((item) => {
+        return <h1>{item.title}</h1>;
+      })}
+    </>
+  );
 };
 export default Products;
