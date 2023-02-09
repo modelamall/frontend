@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserManager from "./context/AuthContext";
 import ProductManager from "./context/ProductContext";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import CategoryManager from "./context/CategoryContext";
 import { BrowserRouter } from "react-router-dom";
 
