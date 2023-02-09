@@ -1,8 +1,6 @@
 import { ProductContext } from "../../context/ProductContext";
 import { useContext } from "react";
 import useFetch from "../../hooks/UseFetch";
-import { useEffect } from "react";
-import "../../assets/css/productStyle.css";
 
 const Products = () => {
   const { data, loading, error } = useFetch("product/all");
@@ -11,88 +9,48 @@ const Products = () => {
     setProducts(data.data);
   }
   return (
-    <>
-      <div className="section small_pt pb_20">
-        <div className="container">
-          {/* <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div className="heading_s3 text-center">
-                <h2>Exclusive Products</h2>
-              </div>
-              <div className="small_divider clearfix"></div>
-            </div>
-          </div> */}
-          <div className="row shop_container">
-            {products.map((product) => {
-              return (
-                <div className="col-lg-3 col-md-4 col-6">
-                  <div className="product_box text-center">
-                    <div className="product_img">
-                      <a href="shop-product-detail.html">
-                        <img
-                          src={product.Pictures[0]}
-                          alt="furniture_img1"
-                        />
-                      </a>
-                      <div className="product_action_box">
-                        <ul className="list_none pr_action_btn">
-                          <li>
-                            <a href="shop-compare.html" className="popup-ajax">
-                              <i className="icon-shuffle"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="shop-quick-view.html"
-                              className="popup-ajax"
-                            >
-                              <i className="icon-magnifier-add"></i>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <i className="icon-heart"></i>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="product_info">
-                      <h6 className="product_title">
-                        <a href="shop-product-detail.html">{product.title}</a>
-                      </h6>
-                      <div className="product_price">
-                        <span className="price">${product.ProductVariations[0].price}</span>
-                        <del>$55.25</del>
-                      </div>
-                      {/* <div className="rating_wrap">
-                        <div className="rating">
-                          <div
-                            className="product_rate"
-                            style={{ width: "80%" }}
-                          ></div>
-                        </div>
-                        <span className="rating_num">(21)</span>
-                      </div> */}
-                      <div className="pr_desc">
-                        <p>
-                          {product.discription}
-                        </p>
-                      </div>
-                      <div className="add-to-cart">
-                        <a href="#" className="btn btn-fill-out btn-radius">
-                          <i className="icon-basket-loaded"></i> Add To Cart
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+    
+      <div className="bg-white">
+      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="text-xl font-bold text-gray-900">Customers also bought</h2>
+
+        <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+          {products.map((product) => (
+            <div key={product.id}>
+              <div className="relative">
+                <div className="relative h-72 w-full overflow-hidden rounded-lg">
+                  <img
+                    src="https://cdn.dsmcdn.com/mnresize/-/-//ty704/product/media/images/20230127/3/267334095/838914816/1/1_org_thumb.jpg"
+                    alt=""
+                    className="h-full w-full object-cover object-center"
+                  />
                 </div>
-              );
-            })}
-          </div>
+                <div className="relative mt-4">
+                  <h3 className="text-sm font-medium text-gray-900">{product.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500">{product.codeId}</p>
+                </div>
+                <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
+                  />
+                  <p className="relative text-lg font-semibold text-white">${product.ProductVariations[0].price}</p>
+                </div>
+              </div>
+              <div className="mt-6">
+                <a
+                  href={product.href}
+                  className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                >
+                  Add to bag<span className="sr-only">, {product.title}</span>
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
+    
   );
 };
 export default Products;
