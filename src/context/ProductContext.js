@@ -2,12 +2,12 @@ import { createContext, useState } from "react";
 export const ProductContext = createContext();
 
 const ProductManager = ({ children }) => {
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   return (
     <ProductContext.Provider
       value={{
-        product,
-        setProduct,
+        products,
+        setProducts,
       }}
     >
       {children}
