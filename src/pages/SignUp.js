@@ -46,7 +46,6 @@ const SignUp = () => {
       ...formData,
       [event.target.name]: event.target.value
     })
-    console.log(formData);
   }
 
   const handleSubmit = async (event) => {
@@ -54,7 +53,7 @@ const SignUp = () => {
     await createUser(formData)}
 
 
-
+    console.log(formData);
 
 
   return (
@@ -75,7 +74,7 @@ const SignUp = () => {
             alt="Your Company"
           /> */}
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign up to your account
+            Create an account
           </h2>
           
         </div>
@@ -247,8 +246,7 @@ const SignUp = () => {
               <div>
                 <button
                  type="submit"
-                 className= "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
+                 className= "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   Sign up
                 </button>
               </div>
