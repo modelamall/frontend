@@ -51,6 +51,7 @@ const SingelProduct = () => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const { id } = useParams();
   const { data, loading, error } = useFetch(`product/${id}`);
+  console.log(data);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -60,7 +61,7 @@ const SingelProduct = () => {
             {/* Image selector */}
             <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {data.data.Pictures.map((image) => (
+                {data?.data?.Pictures.map((image) => (
                   <Tab
                     key={image.id}
                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -86,7 +87,7 @@ const SingelProduct = () => {
             </div>
 
             <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-              {data.data.Pictures.map((image) => (
+              {data?.data?.Pictures.map((image) => (
                 <Tab.Panel key={image.id}>
                   <img
                     src={image.url}

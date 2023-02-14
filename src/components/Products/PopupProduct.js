@@ -278,11 +278,10 @@ const PopupProduct = ({ productId, setSingel }) => {
                               </div>
                             </RadioGroup>
                           </div>
-
                           <button
                             type="submit"
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={() => {history.push(`/product/${product.id}`)}}
+                            onClick={() => window.location.href = `/product/${data?.data?.id}`}
                           >
                             View Product Details
                           </button>
