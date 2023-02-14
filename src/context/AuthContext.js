@@ -6,13 +6,14 @@ const UserManager = ({ children }) => {
     JSON.parse(localStorage.getItem("user") || "{}")
   );
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const logIn = (userData, userToken) => {
+  
+  const signIn = (userData, userToken) => {
     setUser(userData);
     setToken(userToken);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", userToken);
   };
-  const logOut = () => {
+  const signOut = () => {
     setUser({});
     setToken("");
     localStorage.removeItem("user");
@@ -24,8 +25,8 @@ const UserManager = ({ children }) => {
         user,
         setUser,
         token,
-        logIn,
-        logOut,
+        signIn,
+        signOut,
       }}
     >
       {children}
