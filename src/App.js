@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const NavBar = React.lazy(() => import("./components/NavBar/NavBar"));
+const HeaderMenu = React.lazy(() => import("./components/NavBar/Test"));
+
 
 
 function App() {
@@ -11,6 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Suspense><Home /></Suspense>} />
       <Route path="/navBar" element={<Suspense><NavBar/></Suspense>} />
+      <Route path="/headerMenu" element={<Suspense><HeaderMenu/></Suspense>} />
     </Routes>
   );
 }
