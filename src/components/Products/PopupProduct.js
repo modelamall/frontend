@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useFetch from "../../hooks/UseFetch";
+import { useNavigate } from "react-router-dom";
 
 
 const product = {
@@ -42,6 +43,7 @@ const PopupProduct = ({ productId, setSingel }) => {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
   const [activeImg, setActiveImg] = useState(data?.data?.Pictures[0]?.url);
+  const navigate = useNavigate()
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -279,9 +281,9 @@ const PopupProduct = ({ productId, setSingel }) => {
                             </RadioGroup>
                           </div>
                           <button
-                            type="submit"
+                            type="button"
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={() => window.location.href = `/product/${data?.data?.id}`}
+                            onClick={() => navigate(`/product/${data?.data?.id}`)}
                           >
                             View Product Details
                           </button>
