@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { Suspense } from 'react'
 import { Route, Routes } from "react-router-dom";
-import Wrapper from "./components/Wrapper/Wrapper";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const SingelProduct = React.lazy(() => import("./components/Products/SingelProduct"));
@@ -9,6 +8,8 @@ const NavBar = React.lazy(() => import("./components/NavBar/NavBar"));
 const SignUp = React.lazy(() => import("./pages/SignUp"));
 const SignIn = React.lazy(() => import("./pages/SignIn"));
 const Profile = React.lazy(() => import("./pages/Profile"));
+const HeroSection = React.lazy(() => import("./components/HeroSection/HeroSection"));
+
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path="/signup" element={<Suspense><SignUp/></Suspense>} />
       <Route path="/signin" element={<Suspense><SignIn/></Suspense>} />
       <Route path="/profile" element={<Suspense><Profile/></Suspense>} />
+      <Route path="/hero" element={<Suspense><HeroSection/></Suspense>} />
       <Route path="dashboard/*">
 
       </Route>
