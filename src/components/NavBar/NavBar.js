@@ -1,182 +1,308 @@
 import useFetch from "../../hooks/UseFetch";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
-import { Fragment } from "react";
-import { Popover, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { AuthContext } from "../../context/AuthContext";
+
+import { Link, NavLink } from "react-router-dom";
+import {
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 
 const NavBar = () => {
   const { category, setCategory } = useContext(CategoryContext);
-  const { data, loading, error } = useFetch("category/allcategories");
+  const { user, token } = useContext(AuthContext);
+
+  const {
+    responseData: data,
+    loading,
+    error,
+  } = useFetch("category/allcategories");
   if (!loading) {
     setCategory(data.data);
   }
+  const [open, setOpen] = useState(false);
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
   return (
-    <Popover className="relative bg-white">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1 ">
-            <a href="#">
-              <span className="sr-only">Your Company</span>
+    <header className="bg-white shadow">
+      <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
+        <div className="relative flex h-16 justify-between">
+          <div className="relative z-10 flex px-2 lg:px-0">
+            <div className="flex flex-shrink-0 items-center">
               <img
-                className="h-8 w-auto sm:h-10"
+                className="block h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
+                alt="Your Company"
               />
-            </a>
+            </div>
           </div>
-          <div className="-my-2 -mr-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-              <span className="sr-only">Open menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </Popover.Button>
-          </div>
-         
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
-              href="#"
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-            >
-              Sign in
-            </a>
-            <a
-              href="#"
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            >
-              Sign up
-            </a>
-          </div>
-        </div>
-        <Popover.Group as="nav" className="hidden space-x-10 md:flex border-b-2 border-gray-100">
-            {category.map((item) => {
-              return (
-                <Popover className="relative">
-                  {({ open }) => (
-                    <>
-                      <Popover.Button
-                        className={classNames(
-                          open ? "text-gray-900" : "text-gray-500",
-                          "group inline-flex py-2  items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-3"
-                        )}
-                      >
-                        <span key={item.id}>{item.name}</span>
-                        {item?.sub?.length > 0 && (
-                          <ChevronDownIcon
-                            className={classNames(
-                              open ? "text-gray-600" : "text-gray-400",
-                              "ml-2 h-5 w-5 group-hover:text-gray-500"
-                            )}
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Popover.Button>
-
-                      {item?.sub?.length > 0 && (
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-200"
-                          enterFrom="opacity-0 translate-y-1"
-                          enterTo="opacity-100 translate-y-0"
-                          leave="transition ease-in duration-150"
-                          leaveFrom="opacity-100 translate-y-0"
-                          leaveTo="opacity-0 translate-y-1"
-                        >
-                          <Popover.Panel className="absolute z-10 -ml-4 mt-3  w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
-                            <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                              <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                                {item?.sub?.map((itemsub) => {
-                                  return (
-                                    <>
-                                      <a
-                                        key={itemsub?.name}
-                                        href={itemsub?.id}
-                                        className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                                      >
-                                        <icon
-                                          className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                                          aria-hidden="true"
-                                        />
-                                        <div className="ml-4">
-                                          <p className="text-base font-medium text-gray-900">
-                                            {itemsub?.name}
-                                          </p>
-                                        </div>
-                                      </a>
-                                    </>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          </Popover.Panel>
-                        </Transition>
-                      )}
-                    </>
-                  )}
-                </Popover>
-              );
-            })}
-          </Popover.Group>
-      </div>
-
-      <Transition
-        as={Fragment}
-        enter="duration-200 ease-out"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="duration-100 ease-in"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <Popover.Panel
-          focus
-          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
-        >
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pt-5 pb-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
+          <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+            <div className="w-full sm:max-w-lg">
+              <label for="search" className="sr-only">
+                Search
+              </label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <MagnifyingGlassIcon
+                    className="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
                   />
                 </div>
-                <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
-                </div>
-              </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  {category?.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.id}
-                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
-                    >
-                      <item.icon
-                        className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-3 text-base font-medium text-gray-900">
-                        {item.name}
-                      </span>
-                    </a>
-                  ))}
-                </nav>
+                <input
+                  id="search"
+                  name="search"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-indigo-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Search"
+                  type="search"
+                />
               </div>
             </div>
           </div>
-        </Popover.Panel>
-      </Transition>
-    </Popover>
+          <div className="relative z-10 flex items-center lg:hidden">
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              onClick={() => setOpen(!open)}
+            >
+              <span className="sr-only">Open menu</span>
+
+              {open ? (
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+
+          {token && (
+            <div
+              className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center"
+              onMouseLeave={() => setOpen(!open)}
+            >
+              <div className="relative ml-4 flex-shrink-0">
+                <div>
+                  <button
+                    type="button"
+                    className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    id="user-menu-button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    onMouseEnter={() => setOpen(!open)}
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src={user.avatar}
+                      alt=""
+                    />
+                  </button>
+                </div>
+
+                {open && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                    tabindex="-1"
+                  >
+                    <Link
+                      className="block py-2 px-4 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                      to
+                    >
+                      Your Profile
+                    </Link>
+                    <Link
+                      className="block py-2 px-4 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                      to
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {!token && (
+            <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+              <div className="relative ml-4 flex-shrink-0">
+                <div>
+                  <button
+                    type="button"
+                    class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Sign In
+                  </button>
+                  <Link
+                      className=" py-2 px-4 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                      to
+                    >
+                      Sign Up
+                    </Link>
+                </div>
+              </div>
+            </div>
+          )}
+          {token && (
+            <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+              <div className="relative ml-4 flex-shrink-0">
+                <div>
+                  <button
+                    type="button"
+                    className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    id="user-menu-button"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src={user.avatar}
+                      alt=""
+                    />
+                  </button>
+                </div>
+
+                {open && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                    tabindex="-1"
+                  >
+                    <Link
+                      className="block py-2 px-4 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                      to
+                    >
+                      Your Profile
+                    </Link>
+                    <Link
+                      className="block py-2 px-4 text-sm text-gray-700"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="user-menu-item-0"
+                      to
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+        <nav
+          className="hidden lg:flex lg:space-x-8 lg:py-2"
+          aria-label="Global"
+        >
+          {category.map((item) => {
+            return (
+              <NavLink
+                classNameName={({ isActive }) =>
+                  isActive
+                    ? "bg-gray-100 text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+                    : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+                }
+                to={item.name}
+              >
+                {item.name}
+              </NavLink>
+            );
+          })}
+        </nav>
+      </div>
+
+      {open && (
+        <nav className="lg:hidden" aria-label="Global" id="mobile-menu">
+          <div className="space-y-1 px-2 pt-2 pb-3">
+            {category.map((item) => {
+              return (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-gray-100 text-gray-900 block rounded-md py-2 px-3 text-base font-medium"
+                      : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 block rounded-md py-2 px-3 text-base font-medium"
+                  }
+                  to={item.name}
+                >
+                  {item.name}
+                </NavLink>
+              );
+            })}
+          </div>
+          {token && (
+            <div className="border-t border-gray-200 pt-4 pb-3">
+              <div className="flex items-center px-4">
+                <div className="flex-shrink-0">
+                  <img
+                    className="h-10 w-10 rounded-full"
+                    src={user.avatar}
+                    alt=""
+                  />
+                </div>
+                <div className="ml-3">
+                  <div className="text-base font-medium text-gray-800">
+                    {user.name}
+                  </div>
+                  <div className="text-sm font-medium text-gray-500">
+                    {user.email}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 space-y-1 px-2">
+                <Link
+                  className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  to
+                >
+                  Your Profile
+                </Link>
+                <Link
+                  className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  to
+                >
+                  Sign Out
+                </Link>
+              </div>
+            </div>
+          )}
+          {!token && (
+            <div className="border-t border-gray-200 pt-4 pb-3">
+              <div className="flex items-center px-4"></div>
+              <div className="mt-3 space-y-1 px-2">
+                <Link
+                  className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  to
+                >
+                  Sign In
+                </Link>
+                <Link
+                  className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                  to
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </div>
+          )}
+        </nav>
+      )}
+    </header>
   );
 };
 export default NavBar;
