@@ -168,7 +168,7 @@ const SingelProduct = () => {
                     productVariation.ProductProperties.map(
                       (productProperty) => {
                         if (productProperty.Property.type === "Color") {
-                          colors.push({id: productVariation.id, color: productProperty.PropertiesValue.value});
+                          colors.push({id: responseData?.data?.ProductVariations.findIndex((ob)=>ob.id == productVariation.id), color: productProperty.PropertiesValue.value});
                         }
                       }
                     );
@@ -180,9 +180,7 @@ const SingelProduct = () => {
 
                   <RadioGroup
                     value={selectedProduct}
-                    onChange={(i)=>{
-                      const index = responseData?.data?.ProductVariations.findIndex((ob)=>ob.id == i)
-                      setselectedProduct(index)}}
+                    onChange={setselectedProduct}
                     className="mt-2"
                   >
                     <RadioGroup.Label className="sr-only">
