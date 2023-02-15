@@ -4,7 +4,6 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import useFetch from "../../hooks/UseFetch";
 import { useNavigate } from "react-router-dom";
 
-
 const product = {
   name: "Basic Tee 6-Pack ",
   price: "$192",
@@ -42,8 +41,13 @@ const PopupProduct = ({ productId, setSingel }) => {
   const [sizes, setSizes] = useState([]);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
-  const [activeImg, setActiveImg] = useState(data?.data?.Pictures[0]?.url);
-  const navigate = useNavigate()
+  const [selectedProduct, setselectedProduct] = useState(0);
+  const [activeImg, setActiveImg] = useState(
+    data?.data?.ProductVariations[selectedProduct]?.Pictures.length > 0
+      ? data?.data?.ProductVariations[selectedProduct]?.Pictures[0].url
+      : data?.data?.Pictures[0]?.url
+  );
+  const navigate = useNavigate();
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -75,7 +79,9 @@ const PopupProduct = ({ productId, setSingel }) => {
                   <button
                     type="button"
                     className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
-                    onClick={() => {setSingel(false)}}
+                    onClick={() => {
+                      setSingel(false);
+                    }}
                   >
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -83,26 +89,65 @@ const PopupProduct = ({ productId, setSingel }) => {
 
                   <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8">
                     <div className="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg sm:col-span-4 lg:col-span-5">
-                    <div className="gray-100">
-                      <img
-                        src={!activeImg ? data?.data?.Pictures[0]?.url : activeImg}
-                        alt={data?.data?.title}
-                        className="object-cover object-center"
-                      />
-                    </div>
-                    <div className=" flex flex-row">
-                      {
-                        data?.data?.Pictures.map((picture,i)=>{
-                          return(
+                      <div className="gray-100">
+                        {!(
+                          data?.data?.ProductVariations[selectedProduct]
+                            ?.Pictures.length > 0
+                        ) && (
                           <img
-                            src={picture.url}
+                            src={
+                              !activeImg
+                                ? data?.data?.Pictures[0]?.url
+                                : activeImg
+                            }
                             alt={data?.data?.title}
-                            className="h-100 w-1/4"
-                            onClick={()=>setActiveImg(picture.url)}
-                          />)
-                        })
-                      }
-                    </div>
+                            className="object-cover object-center"
+                          />
+                        )}
+                        {data?.data?.ProductVariations[selectedProduct]
+                          ?.Pictures.length > 0 && (
+                          <img
+                            src={
+                              !activeImg
+                                ? data?.data?.ProductVariations[selectedProduct]
+                                    ?.Pictures[0]?.url
+                                : activeImg
+                            }
+                            alt={data?.data?.title}
+                            className="object-cover object-center"
+                          />
+                        )}
+                      </div>
+                      <div className=" flex flex-row">
+                        {!(
+                          data?.data?.ProductVariations[selectedProduct]
+                            ?.Pictures.length > 0
+                        ) &&
+                          data?.data?.Pictures.map((picture) => {
+                            return (
+                              <img
+                                src={picture.url}
+                                alt={data?.data?.title}
+                                className="h-100 w-1/4"
+                                onClick={() => setActiveImg(picture.url)}
+                              />
+                            );
+                          })}
+                        {data?.data?.ProductVariations[selectedProduct]
+                          ?.Pictures.length > 0 &&
+                          data?.data?.ProductVariations[
+                            selectedProduct
+                          ]?.Pictures.map((picture) => {
+                            return (
+                              <img
+                                src={picture.url}
+                                alt={data?.data?.title}
+                                className="h-100 w-1/4"
+                                onClick={() => setActiveImg(picture.url)}
+                              />
+                            );
+                          })}
+                      </div>
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
@@ -118,7 +163,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                         </h3>
 
                         <p className="text-2xl text-gray-900">
-                        {data?.data?.ProductVariations[0].price}₺
+                          {data?.data?.ProductVariations[0].price}₺
                         </p>
                         <div className="mt-6">
                           <p>{data?.data?.discription}</p>
@@ -136,154 +181,179 @@ const PopupProduct = ({ productId, setSingel }) => {
                         <form>
                           {/* Colors */}
                           {colors.length == 0 &&
-                            data?.data?.ProductVariations.map((productVariation)=>{
-                              productVariation.ProductProperties.map((productProperty)=>{
-                                if (productProperty.Property.type === "Color") {
-                                  colors.push(productProperty.PropertiesValue.value)
-                                }
-                              })
-                            })
-                          }
-                          {colors.length > 0 && <div>
-                            <h4 className="text-sm font-medium text-gray-900">
-                              Color
-                            </h4>
-
-                            <RadioGroup
-                              value={selectedColor}
-                              onChange={setSelectedColor}
-                              className="mt-4"
-                            >
-                              <RadioGroup.Label className="sr-only">
-                                {" "}
-                                Choose a color{" "}
-                              </RadioGroup.Label>
-                              <span className="flex items-center space-x-3">
-                                {colors.map((color) => (
-                                  <RadioGroup.Option
-                                    key={color}
-                                    value={color}
-                                    className={({ active, checked }) =>
-                                      classes(
-                                        color,
-                                        active && checked
-                                          ? "ring ring-offset-1"
-                                          : "",
-                                        !active && checked ? "ring-2" : "",
-                                        "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
-                                      )
+                            data?.data?.ProductVariations.map(
+                              (productVariation) => {
+                                productVariation.ProductProperties.map(
+                                  (productProperty) => {
+                                    if (
+                                      productProperty.Property.type === "Color"
+                                    ) {
+                                      colors.push({
+                                        id: data?.data?.ProductVariations.findIndex(
+                                          (ob) => ob.id == productVariation.id
+                                        ),
+                                        color:
+                                          productProperty.PropertiesValue.value,
+                                      });
                                     }
-                                  >
-                                    <RadioGroup.Label
-                                      as="span"
-                                      className="sr-only"
-                                    >
-                                      {" "}
-                                      {color}{" "}
-                                    </RadioGroup.Label>
-                                    <span
-                                      aria-hidden="true"
-                                      className={classes(
-                                        color,
-                                        "h-8 w-8 border border-black border-opacity-10 rounded-full"
-                                      )}
-                                    />
-                                  </RadioGroup.Option>
-                                ))}
-                              </span>
-                            </RadioGroup>
-                          </div>}
+                                  }
+                                );
+                              }
+                            )}
+                          {colors.length > 0 && (
+                            <div>
+                              <h3 className="text-sm text-gray-600">Color</h3>
 
+                              <RadioGroup
+                                value={selectedProduct}
+                                onChange={setselectedProduct}
+                                className="mt-2"
+                              >
+                                <RadioGroup.Label className="sr-only">
+                                  {" "}
+                                  Choose a color{" "}
+                                </RadioGroup.Label>
+                                <span className="flex items-center space-x-3">
+                                  {colors.map((color) => (
+                                    <RadioGroup.Option
+                                      key={color.id}
+                                      value={color.id}
+                                      style={{
+                                        backgroundColor: color.color,
+                                      }}
+                                      className={({ active, checked }) =>
+                                        classes(
+                                          active && checked
+                                            ? "ring ring-offset-1"
+                                            : "",
+                                          !active && checked ? "ring-2" : "",
+                                          "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
+                                        )
+                                      }
+                                    >
+                                      <RadioGroup.Label
+                                        as="span"
+                                        className="sr-only"
+                                      >
+                                        {" "}
+                                      </RadioGroup.Label>
+                                      <span
+                                        aria-hidden="true"
+                                        className={classes(
+                                          "h-8 w-8 border border-black border-opacity-10 rounded-full"
+                                        )}
+                                      />
+                                    </RadioGroup.Option>
+                                  ))}
+                                </span>
+                              </RadioGroup>
+                            </div>
+                          )}
                           {/* Sizes */}
                           {sizes.length == 0 &&
-                            data?.data?.ProductVariations.map((productVariation)=>{
-                              productVariation.ProductProperties.map((productProperty)=>{
-                                if (productProperty.Property.type === "Size") {
-                                  sizes.push({size:productProperty.PropertiesValue.value, count: productVariation.count})
-                                }
-                              })
-                            })
-                          }
-                          {sizes.length > 0 && <div className="mt-10">
-                            <div className="flex items-center justify-between">
-                              <h4 className="text-sm font-medium text-gray-900">
-                                Size
-                              </h4>
-                            </div>
-
-                            <RadioGroup
-                              value={selectedSize}
-                              onChange={setSelectedSize}
-                              className="mt-4"
-                            >
-                              <RadioGroup.Label className="sr-only">
-                                {" "}
-                                Choose a size{" "}
-                              </RadioGroup.Label>
-                              <div className="grid grid-cols-4 gap-4">
-                                {sizes.map((size) => (
-                                  <RadioGroup.Option
-                                    key={size.size}
-                                    value={size.size}
-                                    disabled={size.count==0}
-                                    className={({ active }) =>
-                                      classes(
-                                        size.count>0
-                                          ? "bg-white shadow-sm text-gray-900 cursor-pointer"
-                                          : "bg-gray-50 text-gray-200 cursor-not-allowed",
-                                        active ? "ring-2 ring-indigo-500" : "",
-                                        "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1"
-                                      )
+                            data?.data?.ProductVariations.map(
+                              (productVariation) => {
+                                productVariation.ProductProperties.map(
+                                  (productProperty) => {
+                                    if (
+                                      productProperty.Property.type === "Size"
+                                    ) {
+                                      sizes.push({
+                                        size: productProperty.PropertiesValue
+                                          .value,
+                                        count: productVariation.count,
+                                      });
                                     }
-                                  >
-                                    {({ active, checked }) => (
-                                      <>
-                                        <RadioGroup.Label as="span">
-                                          {size.size}
-                                        </RadioGroup.Label>
-                                        {size.count > 0 ? (
-                                          <span
-                                            className={classes(
-                                              active ? "border" : "border-2",
-                                              checked
-                                                ? "border-indigo-500"
-                                                : "border-transparent",
-                                              "pointer-events-none absolute -inset-px rounded-md"
-                                            )}
-                                            aria-hidden="true"
-                                          />
-                                        ) : (
-                                          <span
-                                            aria-hidden="true"
-                                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                          >
-                                            <svg
-                                              className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                              viewBox="0 0 100 100"
-                                              preserveAspectRatio="none"
-                                              stroke="currentColor"
-                                            >
-                                              <line
-                                                x1={0}
-                                                y1={100}
-                                                x2={100}
-                                                y2={0}
-                                                vectorEffect="non-scaling-stroke"
-                                              />
-                                            </svg>
-                                          </span>
-                                        )}
-                                      </>
-                                    )}
-                                  </RadioGroup.Option>
-                                ))}
+                                  }
+                                );
+                              }
+                            )}
+                          {sizes.length > 0 && (
+                            <div className="mt-10">
+                              <div className="flex items-center justify-between">
+                                <h4 className="text-sm font-medium text-gray-900">
+                                  Size
+                                </h4>
                               </div>
-                            </RadioGroup>
-                          </div>}
+
+                              <RadioGroup
+                                value={selectedSize}
+                                onChange={setSelectedSize}
+                                className="mt-4"
+                              >
+                                <RadioGroup.Label className="sr-only">
+                                  {" "}
+                                  Choose a size{" "}
+                                </RadioGroup.Label>
+                                <div className="grid grid-cols-4 gap-4">
+                                  {sizes.map((size) => (
+                                    <RadioGroup.Option
+                                      key={size.size}
+                                      value={size.size}
+                                      disabled={size.count == 0}
+                                      className={({ active }) =>
+                                        classes(
+                                          size.count > 0
+                                            ? "bg-white shadow-sm text-gray-900 cursor-pointer"
+                                            : "bg-gray-50 text-gray-200 cursor-not-allowed",
+                                          active
+                                            ? "ring-2 ring-indigo-500"
+                                            : "",
+                                          "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1"
+                                        )
+                                      }
+                                    >
+                                      {({ active, checked }) => (
+                                        <>
+                                          <RadioGroup.Label as="span">
+                                            {size.size}
+                                          </RadioGroup.Label>
+                                          {size.count > 0 ? (
+                                            <span
+                                              className={classes(
+                                                active ? "border" : "border-2",
+                                                checked
+                                                  ? "border-indigo-500"
+                                                  : "border-transparent",
+                                                "pointer-events-none absolute -inset-px rounded-md"
+                                              )}
+                                              aria-hidden="true"
+                                            />
+                                          ) : (
+                                            <span
+                                              aria-hidden="true"
+                                              className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
+                                            >
+                                              <svg
+                                                className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
+                                                viewBox="0 0 100 100"
+                                                preserveAspectRatio="none"
+                                                stroke="currentColor"
+                                              >
+                                                <line
+                                                  x1={0}
+                                                  y1={100}
+                                                  x2={100}
+                                                  y2={0}
+                                                  vectorEffect="non-scaling-stroke"
+                                                />
+                                              </svg>
+                                            </span>
+                                          )}
+                                        </>
+                                      )}
+                                    </RadioGroup.Option>
+                                  ))}
+                                </div>
+                              </RadioGroup>
+                            </div>
+                          )}
                           <button
                             type="button"
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            onClick={() => navigate(`/product/${data?.data?.id}`)}
+                            onClick={() =>
+                              navigate(`/product/${data?.data?.id}`)
+                            }
                           >
                             View Product Details
                           </button>
