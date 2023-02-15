@@ -91,7 +91,7 @@ const NavBar = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user.avatar}
+                      src={user?.avatar ? user?.avatar : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
                       alt=""
                     />
                   </button>
@@ -197,7 +197,7 @@ const NavBar = () => {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src={user.avatar}
+                    src={user?.avatar ? user?.avatar : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
                     alt=""
                   />
                 </div>
