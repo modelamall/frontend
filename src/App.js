@@ -7,6 +7,7 @@ const SingelProduct = React.lazy(() => import("./components/Products/SingelProdu
 const NavBar = React.lazy(() => import("./components/NavBar/NavBar"));
 const SignUp = React.lazy(() => import("./pages/SignUp"));
 const SignIn = React.lazy(() => import("./pages/SignIn"));
+const Profile = React.lazy(() => import("./pages/Profile"));
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path="/navBar" element={<Suspense><NavBar/></Suspense>} />
       <Route path="/signup" element={<Suspense><SignUp/></Suspense>} />
       <Route path="/signin" element={<Suspense><SignIn/></Suspense>} />
+      <Route path="/profile" element={<Suspense><Profile/></Suspense>} />
     </Routes>
   );
 }

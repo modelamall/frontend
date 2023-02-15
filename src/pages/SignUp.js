@@ -58,14 +58,6 @@ const SignUp = () => {
 
   return (
     <>
-      {/*
-      This example requires updating your template:
-
-      ```
-      <html class="h-full bg-gray-50">
-      <body class="h-full">
-      ```
-    */}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           {/* <img
@@ -214,7 +206,7 @@ const SignUp = () => {
                 name= "gender"
                 type="radio"
                 value={1}
-                defaultChecked=""
+                defaultChecked="male"
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
@@ -229,7 +221,7 @@ const SignUp = () => {
                 name= "gender"
                 type="radio"
                 value={0}
-                defaultChecked=""
+                defaultChecked="female"
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
               <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
@@ -265,7 +257,7 @@ const SignUp = () => {
               </div>
               <div className="relative flex justify-center mt-5 text-sm">
                   <span className="bg-white px-2 text-black-500">
-                  Already have an account ? <a>Sign in</a>
+                  Already have an account ? <a onClick={()=> navigate('/signin')}>Sign in</a>
                 </span>
                 </div>
             </div>
