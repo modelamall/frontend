@@ -14,11 +14,7 @@ const NavBar = () => {
   const { category, setCategory } = useContext(CategoryContext);
   const { user, token } = useContext(AuthContext);
 
-  const {
-    responseData: data,
-    loading,
-    error,
-  } = useFetch("category/allcategories");
+  const { data, loading, error } = useFetch("category/allcategories");
   if (!loading) {
     setCategory(data.data);
   }
@@ -143,14 +139,14 @@ const NavBar = () => {
                     Sign In
                   </button>
                   <Link
-                      className=" py-2 px-4 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-0"
-                      to
-                    >
-                      Sign Up
-                    </Link>
+                    className=" py-2 px-4 text-sm text-gray-700"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="user-menu-item-0"
+                    to
+                  >
+                    Sign Up
+                  </Link>
                 </div>
               </div>
             </div>
