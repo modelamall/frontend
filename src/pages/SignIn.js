@@ -144,7 +144,7 @@ const SignIn = () => {
               </div>
               <div className="relative flex justify-center mt-5 text-sm">
                   <span className="bg-white px-2 text-black-500">
-                  Don't have an account ? <a>Sign up</a>
+                  Don't have an account ? <a  onClick={()=> navigate('/signup')}>Sign up</a>
                 </span>
                 </div>
             </div>
