@@ -204,7 +204,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                               })
                             })
                           }
-                          <div className="mt-10">
+                          {sizes.length > 0 && <div className="mt-10">
                             <div className="flex items-center justify-between">
                               <h4 className="text-sm font-medium text-gray-900">
                                 Size
@@ -221,7 +221,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                                 Choose a size{" "}
                               </RadioGroup.Label>
                               <div className="grid grid-cols-4 gap-4">
-                                {sizes.length > 0 && sizes.map((size) => (
+                                {sizes.map((size) => (
                                   <RadioGroup.Option
                                     key={size.size}
                                     value={size.size}
@@ -279,7 +279,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                                 ))}
                               </div>
                             </RadioGroup>
-                          </div>
+                          </div>}
                           <button
                             type="button"
                             className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
