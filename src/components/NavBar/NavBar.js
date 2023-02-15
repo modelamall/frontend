@@ -151,57 +151,6 @@ const NavBar = () => {
               </div>
             </div>
           )}
-          {token && (
-            <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-              <div className="relative ml-4 flex-shrink-0">
-                <div>
-                  <button
-                    type="button"
-                    className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    id="user-menu-button"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                  >
-                    <span className="sr-only">Open user menu</span>
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src={user.avatar}
-                      alt=""
-                    />
-                  </button>
-                </div>
-
-                {open && (
-                  <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu-button"
-                    tabindex="-1"
-                  >
-                    <Link
-                      className="block py-2 px-4 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-0"
-                      to
-                    >
-                      Your Profile
-                    </Link>
-                    <Link
-                      className="block py-2 px-4 text-sm text-gray-700"
-                      role="menuitem"
-                      tabindex="-1"
-                      id="user-menu-item-0"
-                      to
-                    >
-                      Sign Out
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
         <nav
           className="hidden lg:flex lg:space-x-8 lg:py-2"
