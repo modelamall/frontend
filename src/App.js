@@ -15,7 +15,6 @@ const Profile = React.lazy(() => import("./pages/Profile"));
 function App() {
   return (
     <>
-    <NavBar />
     <Routes>
       <Route path="/product" element={<Suspense><Home /></Suspense>} />
       <Route path="/product/:id" element={<Suspense><SingelProduct /></Suspense>} />

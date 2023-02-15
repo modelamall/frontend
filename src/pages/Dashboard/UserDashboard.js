@@ -1,24 +1,24 @@
 import DashboardLayout from "./DashboardLayout"
 import { Routes, Route } from "react-router-dom"
-
+import {
+    Bars3Icon,
+    CalendarIcon,
+    ChartBarIcon,
+    FolderIcon,
+    HomeIcon,
+    InboxIcon,
+    UsersIcon,
+    XMarkIcon,
+} from '@heroicons/react/24/outline'
 const menuItems = [
-    {
-        to: '/dashboard',
-        text: 'Dashboard'
-    },
-    {
-        to: '/dashboard/profile',
-        text: 'Profile'
-    },
-    {
-        to: '/dashboard/signout',
-        text: 'Sign Out'
-    },
+    { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
+    { name: 'Orders', to: '/dashboard/orders', icon: UsersIcon },
+    { name: 'Profile', to: '/dashboard/profile', icon: FolderIcon },
 ]
 
 const UserDashboard = () => {
     return (
-        <DashboardLayout menuItems={menuItems}>
+        <DashboardLayout navigation={menuItems}>
             <Routes>
                 <Route path="orders" element={<>Orders</>} />
                 <Route path="profile" element={<>Profile</>} />
