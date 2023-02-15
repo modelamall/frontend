@@ -13,7 +13,7 @@ const Profile = React.lazy(() => import("./pages/Profile"));
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Suspense><Home /></Suspense>} />
+      <Route path="/product" element={<Suspense><Home /></Suspense>} />
       <Route path="/product/:id" element={<Suspense><SingelProduct /></Suspense>} />
       <Route path="/navBar" element={<Suspense><NavBar/></Suspense>} />
       <Route path="/signup" element={<Suspense><SignUp/></Suspense>} />
