@@ -7,10 +7,6 @@ const menuItems = [
         text: 'Dashboard'
     },
     {
-        to: '/dashboard/products',
-        text: 'Products'
-    },
-    {
         to: '/dashboard/profile',
         text: 'Profile'
     },
@@ -20,17 +16,17 @@ const menuItems = [
     },
 ]
 
-const StoreDashboard = () => {
+const UserDashboard = () => {
     return (
         <DashboardLayout menuItems={menuItems}>
             <Routes>
-                <Route path="products" element={<>Products</>} />
+                <Route path="orders" element={<>Orders</>} />
                 <Route path="profile" element={<>Profile</>} />
-                <Route path="signout" element={<>signout</>} />
+                <Route path="signout" element={<>sign out</>} />
                 <Route path="*" element={<>...</>} />
             </Routes>
         </DashboardLayout>
     )
 }
 
-export default StoreDashboard
+export default UserDashboard
