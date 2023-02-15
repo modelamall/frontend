@@ -5,81 +5,6 @@ import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import useFetch from "../../hooks/UseFetch";
 import { useParams } from "react-router-dom";
 
-const product = {
-  name: "Zip Tote Basket",
-  price: "$140",
-  rating: 4,
-  images: [
-    {
-      id: 1,
-      name: "Angled view",
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
-      alt: "Angled front view with bag zipped and handles upright.",
-    },
-    // More images...
-  ],
-  colors: [
-    {
-      name: "Washed Black",
-      bgColor: "bg-gray-700",
-      selectedColor: "ring-gray-700",
-    },
-    { name: "White", bgColor: "bg-white", selectedColor: "ring-gray-400" },
-    {
-      name: "Washed Gray",
-      bgColor: "bg-gray-500",
-      selectedColor: "ring-gray-500",
-    },
-  ],
-  description: `
-    <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
-  `,
-  details: [
-    {
-      name: "Features",
-      items: [
-        "Multiple strap configurations",
-        "Spacious interior with top zip",
-        "Leather handle and tabs",
-        "Interior dividers",
-        "Stainless strap loops",
-        "Double stitched construction",
-        "Water-resistant",
-      ],
-    },
-    // More sections...
-  ],
-};
-const plans = [
-  {
-    name: "Hobby",
-    ram: "8GB",
-    cpus: "4 CPUs",
-    disk: "160 GB SSD disk",
-    price: "$40",
-  },
-  {
-    name: "Startup",
-    ram: "12GB",
-    cpus: "6 CPUs",
-    disk: "256 GB SSD disk",
-    price: "$80",
-  },
-  {
-    name: "Business",
-    ram: "16GB",
-    cpus: "8 CPUs",
-    disk: "512 GB SSD disk",
-    price: "$160",
-  },
-  {
-    name: "Enterprise",
-    ram: "32GB",
-    cpus: "12 CPUs",
-    disk: "1024 GB SSD disk",
-    price: "$240",
-  },
-];
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -90,7 +15,7 @@ const SingelProduct = () => {
   const [sizes, setSizes] = useState([]);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
-  const [selected, setSelected] = useState(plans[0]);
+  const [selectedProduct, setselectedProduct] = useState(0);
   const { id } = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -114,7 +39,33 @@ const SingelProduct = () => {
             {/* Image selector */}
             <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {responseData?.data?.Pictures.map((image) => (
+                {!(responseData?.data?.ProductVariations[selectedProduct]?.Pictures.length > 0) && responseData?.data?.Pictures.map((image) => (
+                  <Tab
+                    key={image.id}
+                    className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span className="sr-only"> {image.alt} </span>
+                        <span className="absolute inset-0 overflow-hidden rounded-md">
+                          <img
+                            src={image.url}
+                            alt=""
+                            className="h-full w-full object-cover object-center"
+                          />
+                        </span>
+                        <span
+                          className={classNames(
+                            selected ? "ring-indigo-500" : "ring-transparent",
+                            "pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
+                          )}
+                          aria-hidden="true"
+                        />
+                      </>
+                    )}
+                  </Tab>
+                ))}
+                {responseData?.data?.ProductVariations[selectedProduct]?.Pictures.length > 0 && responseData?.data?.ProductVariations[selectedProduct].Pictures.map((image) => (
                   <Tab
                     key={image.id}
                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -144,7 +95,16 @@ const SingelProduct = () => {
             </div>
 
             <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-              {responseData?.data?.Pictures.map((image) => (
+              {(responseData?.data?.ProductVariations[selectedProduct]?.Pictures.length == 0) && responseData?.data?.Pictures.map((image) => (
+                <Tab.Panel key={image.id}>
+                  <img
+                    src={image.url}
+                    alt={image.alt}
+                    className="h-full w-full object-cover object-center sm:rounded-lg"
+                  />
+                </Tab.Panel>
+              ))}
+              {responseData?.data?.ProductVariations[selectedProduct]?.Pictures.length > 0 && responseData?.data?.ProductVariations[selectedProduct].Pictures.map((image) => (
                 <Tab.Panel key={image.id}>
                   <img
                     src={image.url}
@@ -165,7 +125,7 @@ const SingelProduct = () => {
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {responseData?.data?.ProductVariations[0].price}₺
+                {responseData?.data?.ProductVariations[selectedProduct]?.price}₺
               </p>
             </div>
 
@@ -208,7 +168,7 @@ const SingelProduct = () => {
                     productVariation.ProductProperties.map(
                       (productProperty) => {
                         if (productProperty.Property.type === "Color") {
-                          colors.push(productProperty.PropertiesValue.value);
+                          colors.push({id: productVariation.id, color: productProperty.PropertiesValue.value});
                         }
                       }
                     );
@@ -219,8 +179,10 @@ const SingelProduct = () => {
                   <h3 className="text-sm text-gray-600">Color</h3>
 
                   <RadioGroup
-                    value={selectedColor}
-                    onChange={setSelectedColor}
+                    value={selectedProduct}
+                    onChange={(i)=>{
+                      const index = responseData?.data?.ProductVariations.findIndex((ob)=>ob.id == i)
+                      setselectedProduct(index)}}
                     className="mt-2"
                   >
                     <RadioGroup.Label className="sr-only">
@@ -230,11 +192,13 @@ const SingelProduct = () => {
                     <span className="flex items-center space-x-3">
                       {colors.map((color) => (
                         <RadioGroup.Option
-                          key={color}
-                          value={color}
+                          key={color.id}
+                          value={color.id}
+                          style={{
+                            backgroundColor: color.color
+                          }}
                           className={({ active, checked }) =>
                             classNames(
-                              color,
                               active && checked ? "ring ring-offset-1" : "",
                               !active && checked ? "ring-2" : "",
                               "-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none"
@@ -243,12 +207,11 @@ const SingelProduct = () => {
                         >
                           <RadioGroup.Label as="span" className="sr-only">
                             {" "}
-                            {color}{" "}
+                            {" "}
                           </RadioGroup.Label>
                           <span
                             aria-hidden="true"
                             className={classNames(
-                              color,
                               "h-8 w-8 border border-black border-opacity-10 rounded-full"
                             )}
                           />
@@ -260,39 +223,43 @@ const SingelProduct = () => {
               )}
               {/* Sizes */}
               {sizes.length == 0 &&
-                responseData?.data?.ProductVariations.map((productVariation) => {
-                  productVariation.ProductProperties.map((productProperty) => {
-                    if (productProperty.Property.type === "Size") {
-                      sizes.push({
-                        size: productProperty.PropertiesValue.value,
-                        count: productVariation.count,
-                      });
-                    }
-                  });
-                })}
-              <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-medium text-gray-900">Size</h4>
-                </div>
+                responseData?.data?.ProductVariations.map(
+                  (productVariation) => {
+                    productVariation.ProductProperties.map(
+                      (productProperty) => {
+                        if (productProperty.Property.type === "Size") {
+                          sizes.push({
+                            size: productProperty.PropertiesValue.value,
+                            count: productVariation.count,
+                          });
+                        }
+                      }
+                    );
+                  }
+                )}
+              {sizes.length > 0 && (
+                <div className="mt-10">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-medium text-gray-900">Size</h4>
+                  </div>
 
-                <RadioGroup
-                  value={selectedSize}
-                  onChange={setSelectedSize}
-                  className="mt-4"
-                >
-                  <RadioGroup.Label className="sr-only">
-                    {" "}
-                    Choose a size{" "}
-                  </RadioGroup.Label>
-                  <div className="grid grid-cols-4 gap-4">
-                    {sizes.length > 0 &&
-                      sizes.map((size) => (
+                  <RadioGroup
+                    value={selectedSize}
+                    onChange={setSelectedSize}
+                    className="mt-4"
+                  >
+                    <RadioGroup.Label className="sr-only">
+                      {" "}
+                      Choose a size{" "}
+                    </RadioGroup.Label>
+                    <div className="grid grid-cols-4 gap-4">
+                      {sizes.map((size) => (
                         <RadioGroup.Option
                           key={size.size}
                           value={size.size}
                           disabled={size.count == 0}
                           className={({ active }) =>
-                          classNames(
+                            classNames(
                               size.count > 0
                                 ? "bg-white shadow-sm text-gray-900 cursor-pointer"
                                 : "bg-gray-50 text-gray-200 cursor-not-allowed",
@@ -342,9 +309,10 @@ const SingelProduct = () => {
                           )}
                         </RadioGroup.Option>
                       ))}
-                  </div>
-                </RadioGroup>
-              </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+              )}
 
               <div className="sm:flex-col1 mt-10 flex">
                 <button
@@ -407,9 +375,10 @@ const SingelProduct = () => {
                       >
                         <RadioGroup>
                           <div className="space-y-4">
-                            {responseData?.data?.ProductVariations[1].ProductProperties.map(
+                            {responseData?.data?.ProductVariations[selectedProduct]?.ProductProperties.map(
                               (productProperty) => (
                                 <RadioGroup.Option
+                                key={productProperty.id}
                                   className={
                                     "border-gray-300 relative block cursor-pointer rounded-lg border bg-white px-6 py-4 shadow-sm focus:outline-none sm:flex sm:justify-between"
                                   }
