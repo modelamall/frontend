@@ -2,18 +2,11 @@ import NavBar from "../NavBar/NavBar";
 
 const Wrapper = ({ children }) => {
     return (
-      <div className="flex">
-        <div
-          style={{
-            
-          }}
-        >
+      <div>
+        <div>
           <NavBar  />
         </div>
-        <div
-          style={{
-          }}
-        >
+        <div>
           {children}
         </div>
       </div>
