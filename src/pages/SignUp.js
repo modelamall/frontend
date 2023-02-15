@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState ({
+  const [formData, setFormData] = useState({
     name: "",
     username: "",
     email: "",
@@ -15,32 +15,32 @@ const SignUp = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const createUser = async (formData) => {
     setLoading(true)
     try {
-    const res = await fetch(process.env.REACT_APP_API + "/user/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+      const res = await fetch(process.env.REACT_APP_API + "/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
 
-    const json = await res.json();
-    window.alert(json.messages)
-    if (json.success)
-    navigate('/signin')
-    setLoading(false);
-    setError(null);
-  }catch (error) {
-    setError(error)
-    setLoading(false)
+      const json = await res.json();
+      window.alert(json.messages)
+      if (json.success)
+        navigate('/signin')
+      setLoading(false);
+      setError(null);
+    } catch (error) {
+      setError(error)
+      setLoading(false)
 
+    }
   }
-  }
- 
-  
+
+
   const handleOnChange = (event) => {
     setFormData({
       ...formData,
@@ -50,12 +50,9 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    await createUser(formData)}
-
-
-    console.log(formData);
-
-
+    await createUser(formData)
+  }
+  console.log(formData);
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -68,13 +65,13 @@ const SignUp = () => {
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Create an account
           </h2>
-          
+
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
-            <div>
+              <div>
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
@@ -83,7 +80,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="name"
                     name="name"
                     type="name"
@@ -103,7 +100,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="username"
                     name="username"
                     type="username"
@@ -123,7 +120,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="email"
                     name="email"
                     type="email"
@@ -143,7 +140,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="phone"
                     name="phone"
                     type="phone"
@@ -163,7 +160,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="password"
                     name="password"
                     type="password"
@@ -183,7 +180,7 @@ const SignUp = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                  onChange={handleOnChange}
+                    onChange={handleOnChange}
                     id="passwordConfirmation"
                     name="passwordConfirmation"
                     type="password"
@@ -195,50 +192,50 @@ const SignUp = () => {
               </div>
 
               <div>
-      <label className="block text-sm font-medium text-gray-700">Gender</label>
-      <fieldset className="mt-4">
-        <div className="  mb-3 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-          
-            <div key="" className="flex items-center">
-              <input
-              onChange={handleOnChange}
-                id="male"
-                name= "gender"
-                type="radio"
-                value={1}
-                defaultChecked="male"
-                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
-                Male
-              </label>
-              
-            </div>
-            <div key="" className="flex items-center">
-              <input
-              onChange={handleOnChange}
-                id="female"
-                name= "gender"
-                type="radio"
-                value={0}
-                defaultChecked="female"
-                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
-                Female
-              </label>
-              
-            </div>
-     
-        </div>
-      </fieldset>
-    </div>
+                <label className="block text-sm font-medium text-gray-700">Gender</label>
+                <fieldset className="mt-4">
+                  <div className="  mb-3 space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+
+                    <div key="male" className="flex items-center">
+                      <input
+                        onClick={handleOnChange}
+                        id="male"
+                        name="gender"
+                        type="radio"
+                        value={1}
+                        defaultChecked="male"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
+                        Male
+                      </label>
+
+                    </div>
+                    <div key="female" className="flex items-center">
+                      <input
+                        onClick={handleOnChange}
+                        id="female"
+                        name="gender"
+                        type="radio"
+                        value={0}
+                        defaultChecked="female"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label htmlFor="" className="ml-3 block text-sm font-medium text-gray-700">
+                        Female
+                      </label>
+
+                    </div>
+
+                  </div>
+                </fieldset>
+              </div>
 
 
               <div>
                 <button
-                 type="submit"
-                 className= "flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  type="submit"
+                  className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   Sign up
                 </button>
               </div>
@@ -256,10 +253,10 @@ const SignUp = () => {
                 </div>
               </div>
               <div className="relative flex justify-center mt-5 text-sm">
-                  <span className="bg-white px-2 text-black-500">
-                  Already have an account ? <a onClick={()=> navigate('/signin')}>Sign in</a>
+                <span className="bg-white px-2 text-black-500">
+                  Already have an account ? <a onClick={() => navigate('/signin')}>Sign in</a>
                 </span>
-                </div>
+              </div>
             </div>
           </div>
         </div>
