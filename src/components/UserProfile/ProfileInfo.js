@@ -1,25 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 const ProfileInformation = () => {
   const { token, setUser, user } = useContext(AuthContext);
-  const [file, setFile] = useState(null);
+  const imgRef = useRef()
 
   const [formData, setFormData] = useState({
-    name: user.user?.name,
-    username: user.user?.username,
-    email: user.user?.email,
-    phone: user.user?.phone,
-    gender: user.user?.gender,
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    phone: user.phone,
+    gender: user.gender,
     currentPassword: "",
     newPassword: "",
     passwordConfirmation: "",
-    avatar: user.user.avatar,
+    avatar: user.avatar,
   });
 
   const updateUserProfile = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
+    console.log(form.get('avatar'))
+    if(!form.get(`avatar`)){
+      form.set('avatar', formData.avatar)
+    }
     const res = await fetch(process.env.REACT_APP_API + `/user/update`, {
       method: "PUT",
       body: form,
@@ -32,18 +36,21 @@ const ProfileInformation = () => {
     localStorage.setItem("user", JSON.stringify(json.data));
     if (json.success) {
       alert(json.messages);
+
       setFormData({
-        ...formData,
+        ...json.data,
         currentPassword: "",
         newPassword: "",
         passwordConfirmation: "",
       });
+      setUser(json.data)
+      const token = localStorage.getItem(token) 
+      localStorage.setItem('user', JSON.stringify(json.data))
     }
   }
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+
+  console.log(formData)
   return (
     <>
       <div className=" max-w-6xl mx-auto py-5 mt-10 sm:mt-0 ">
@@ -63,12 +70,12 @@ const ProfileInformation = () => {
               <div>
                 <div className="mx-6 mt-6 flex items-center ">
                 <label htmlFor="avatar">
-              
+             
                   <img
                   className="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-100"
-                    ref={null}
+                    onClick={()=> imgRef.current.click()}
                     src={
-                      formData.avatar.split(`/`).find((link) => (link = "null"))
+                      formData?.avatar?.split('/').findIndex(link => link == 'null') != -1
                         ? "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
                         : formData.avatar
                     }
@@ -90,6 +97,11 @@ const ProfileInformation = () => {
                       >
                         Name
                       </label>
+                      <input type={'file'} ref={imgRef} 
+              name='avatar' 
+              style={{
+                display: 'none'
+              }}/>
                       <input
                         value={formData.name}
                         type="text"

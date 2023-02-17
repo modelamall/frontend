@@ -95,7 +95,7 @@ const NavBar = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user?.avatar ? user?.avatar : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
+                      src={user.avatar.split('/').findIndex(link => link == 'null') == -1 ?   user.avatar :"https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png" }
                       alt=""
                     />
                   </button>

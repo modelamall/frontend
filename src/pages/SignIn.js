@@ -27,7 +27,7 @@ const SignIn = () => {
       window.alert(json.messages);
       console.log(json);
       if (json.success) {
-        signIn(json.data, json.data.token);
+        signIn(json.data.user, json.data.token);
         setLoading(false);
         setError(null);
         navigate("/");
