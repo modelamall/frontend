@@ -27,7 +27,7 @@ const ProfileInformation = () => {
         },
       });
       const json = await res.json();
-      localStorage.setItem("the_user", JSON.stringify(json.data));
+      localStorage.setItem("user", JSON.stringify(json.data));
       if (json.success) {
         alert(json.messages);
         setFormData(json.data)

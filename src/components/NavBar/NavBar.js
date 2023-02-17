@@ -123,7 +123,8 @@ const NavBar = () => {
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-0"
-                      to
+                      to={"/signout"}
+
                     >
                       Sign Out
                     </Link>
@@ -225,8 +226,8 @@ const NavBar = () => {
                 </Link>
                 <Link
                   className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                  to
-                >
+                  to={"/signout"}
+                  >
                   Sign Out
                 </Link>
               </div>
