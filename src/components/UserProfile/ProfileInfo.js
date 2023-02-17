@@ -3,38 +3,47 @@ import { AuthContext } from "../../context/AuthContext";
 
 const ProfileInformation = () => {
   const { token, setUser, user } = useContext(AuthContext);
+  const [file, setFile] = useState(null);
 
   const [formData, setFormData] = useState({
-    name: user.user.name,
-    username: user.user.username,
-    email: user.user.email,
-    phone: user.user.phone,
-    gender: user.user.gender,
+    name: user.user?.name,
+    username: user.user?.username,
+    email: user.user?.email,
+    phone: user.user?.phone,
+    gender: user.user?.gender,
     currentPassword: "",
     newPassword: "",
     passwordConfirmation: "",
+    avatar: user.user.avatar,
   });
 
   const updateUserProfile = async (e) => {
-      e.preventDefault();
-      const form = new FormData(e.target);
-      const res = await fetch(process.env.REACT_APP_API + `/user/update`, {
-        method: "PUT",
-        body: form,
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const res = await fetch(process.env.REACT_APP_API + `/user/update`, {
+      method: "PUT",
+      body: form,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    localStorage.setItem("user", JSON.stringify(json.data));
+    if (json.success) {
+      alert(json.messages);
+      setFormData({
+        ...formData,
+        currentPassword: "",
+        newPassword: "",
+        passwordConfirmation: "",
       });
-      const json = await res.json();
-      localStorage.setItem("user", JSON.stringify(json.data));
-      if (json.success) {
-        alert(json.messages);
-        setFormData(json.data)
-      }
+    }
+  }
 
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
   };
-
   return (
     <>
       <div className=" max-w-6xl mx-auto py-5 mt-10 sm:mt-0 ">
@@ -45,19 +54,30 @@ const ProfileInformation = () => {
                 Profile information
               </h3>
             </div>
-            <div>
-              <div className="mx-6 mt-6 flex items-center">
-                <span className="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-100">
-                  <svg
-                    className="h-full w-full text-gray-300"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
+            <form
+              onSubmit={updateUserProfile}
+              action="/upload"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div>
+                <div className="mx-6 mt-6 flex items-center ">
+                <label htmlFor="avatar">
+              
+                  <img
+                  className="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-100"
+                    ref={null}
+                    src={
+                      formData.avatar.split(`/`).find((link) => (link = "null"))
+                        ? "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
+                        : formData.avatar
+                    }
+                  />
+
+                </label>
+                </div>
               </div>
-            </div>
+            </form>
 
             <form onSubmit={updateUserProfile} action="#" method="POST">
               <div className="">
@@ -163,6 +183,7 @@ const ProfileInformation = () => {
                         Current password
                       </label>
                       <input
+                        value={formData.currentPassword}
                         type="password"
                         name="currentPassword"
                         id="currentPassword"
@@ -185,6 +206,7 @@ const ProfileInformation = () => {
                         New password
                       </label>
                       <input
+                        value={formData.newPassword}
                         type="password"
                         name="newPassword"
                         id="newPassword"
@@ -207,6 +229,7 @@ const ProfileInformation = () => {
                         Confirm new password
                       </label>
                       <input
+                        value={formData.passwordConfirmation}
                         type="password"
                         name="passwordConfirmation"
                         id="passwordConfirmation"

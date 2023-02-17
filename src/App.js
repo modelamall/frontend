@@ -10,6 +10,7 @@ const SignUp = React.lazy(() => import("./pages/SignUp"));
 const SignIn = React.lazy(() => import("./pages/SignIn"));
 const SignOut = React.lazy(() => import("./pages/SignOut"));
 const Profile = React.lazy(() => import("./pages/Profile"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Wrapper = React.lazy(() => import("./components/Wrapper/Wrapper"));
 
 
@@ -25,6 +26,7 @@ function App() {
       <Route path="/signin" element={<Wrapper><Suspense><SignIn/></Suspense></Wrapper>} />
       <Route path="/signout" element={<Wrapper><Suspense><SignOut/></Suspense></Wrapper>} />
       <Route path="/profile" element={<Wrapper><Suspense><Profile/></Suspense></Wrapper>} />
+      <Route path="/*" element={<Wrapper><Suspense><NotFound/></Suspense></Wrapper>} />
       <Route path="dashboard/*" element={<Suspense><Dashboard/></Suspense>}>
 
       </Route>
