@@ -12,7 +12,6 @@ const Home = () => {
             <CategorySection/>
         </div>
         <div>
-            <Products/>
         </div>
     </>
   );

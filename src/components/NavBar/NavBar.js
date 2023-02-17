@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
 import { AuthContext } from "../../context/AuthContext";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -26,11 +26,15 @@ const NavBar = () => {
         <div className="relative flex h-16 justify-between">
           <div className="relative z-10 flex px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
+              <Link
+              to={"/"}
+              >
               <img
                 className="block h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt="Your Company"
-              />
+              /></Link>
+              
             </div>
           </div>
           <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
@@ -110,7 +114,7 @@ const NavBar = () => {
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-0"
-                      to
+                      to={"/profile"}
                     >
                       Your Profile
                     </Link>
@@ -136,14 +140,15 @@ const NavBar = () => {
                     type="button"
                     class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    Sign In
+                    <Link to={"/signin"} >Sign In</Link>
+                    
                   </button>
                   <Link
                     className=" py-2 px-4 text-sm text-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-0"
-                    to
+                    to={"/signup"}
                   >
                     Sign Up
                   </Link>
@@ -164,7 +169,8 @@ const NavBar = () => {
                     ? "bg-gray-100 text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
                     : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
                 }
-                to={item.name}
+                to={`/product/category/${item.id}`}
+                
               >
                 {item.name}
               </NavLink>
@@ -184,7 +190,7 @@ const NavBar = () => {
                       ? "bg-gray-100 text-gray-900 block rounded-md py-2 px-3 text-base font-medium"
                       : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 block rounded-md py-2 px-3 text-base font-medium"
                   }
-                  to={item.name}
+                  to={`/product/category/${item.id}`}
                 >
                   {item.name}
                 </NavLink>
@@ -213,7 +219,7 @@ const NavBar = () => {
               <div className="mt-3 space-y-1 px-2">
                 <Link
                   className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                  to
+                  to={"/profile"}
                 >
                   Your Profile
                 </Link>
@@ -232,13 +238,13 @@ const NavBar = () => {
               <div className="mt-3 space-y-1 px-2">
                 <Link
                   className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                  to
+                  to={"/signin"}
                 >
                   Sign In
                 </Link>
                 <Link
                   className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                  to
+                  to={"/signup"}
                 >
                   Sign Up
                 </Link>

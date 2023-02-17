@@ -2,6 +2,7 @@ import React from "react";
 import useFetch from "../../hooks/UseFetch";
 import { useContext } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
+import { Link } from "react-router-dom";
 
 function CategorySection() {
   const { category, setCategory } = useContext(CategoryContext);
@@ -27,14 +28,18 @@ function CategorySection() {
                   {category.map((item, i) => (
                     <>
                       {i < 5 && (
-                        <a
+                        <Link
                           key={item.name}
-                          href={item.name}
+                          to={`/product/category/${item.id}`}
                           className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                         >
                           <span aria-hidden="true" className="absolute inset-0">
                             <img
-                              src={item?.icon ? item?.icon : "https://ticari.tarkett.com.tr/media/img/M/TH_26513016_001.jpg"}
+                              src={
+                                item?.icon
+                                  ? item?.icon
+                                  : "https://ticari.tarkett.com.tr/media/img/M/TH_26513016_001.jpg"
+                              }
                               alt={item.name}
                               className="h-full w-full object-cover object-center"
                             />
@@ -46,23 +51,13 @@ function CategorySection() {
                           <span className="relative mt-auto text-center text-xl font-bold text-white">
                             {item.name}
                           </span>
-                        </a>
+                        </Link>
                       )}
                     </>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="mt-6 px-4 sm:hidden">
-            <a
-              href="#"
-              className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500"
-            >
-              Browse all categories
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
           </div>
         </div>
       </div>
