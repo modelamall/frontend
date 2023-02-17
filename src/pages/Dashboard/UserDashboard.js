@@ -10,6 +10,7 @@ import {
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import PersonalInfo from "../Profile"
 const menuItems = [
     { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
     { name: 'Orders', to: '/dashboard/orders', icon: UsersIcon },
@@ -21,7 +22,7 @@ const UserDashboard = () => {
         <DashboardLayout navigation={menuItems}>
             <Routes>
                 <Route path="orders" element={<>Orders</>} />
-                <Route path="profile" element={<>Profile</>} />
+                <Route path="profile" element={<PersonalInfo/>} />
                 <Route path="signout" element={<>sign out</>} />
                 <Route path="*" element={<>...</>} />
             </Routes>
