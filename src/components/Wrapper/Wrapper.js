@@ -1,7 +1,9 @@
+import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 
 const Wrapper = ({ children }) => {
     return (
+      <>
       <div>
         <div>
           <NavBar  />
@@ -10,6 +12,8 @@ const Wrapper = ({ children }) => {
           {children}
         </div>
       </div>
+      <Footer/>
+      </>
     );
   };
   
