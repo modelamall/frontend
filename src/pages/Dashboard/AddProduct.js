@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const AddProduct = () => {
   return (
     <form className="space-y-6" action="#" method="POST">
@@ -35,7 +37,7 @@ const AddProduct = () => {
                 htmlFor="discription"
                 className="block text-sm font-medium text-gray-700"
               >
-                Discription
+                Description
               </label>
               <div className="mt-1">
                 <textarea
@@ -46,37 +48,29 @@ const AddProduct = () => {
                   defaultValue={""}
                 />
               </div>
-              <p className="mt-2 text-sm text-gray-500">
-                Brief description for your profile. URLs are hyperlinked.
-              </p>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Photo
-              </label>
-              <div className="mt-1 flex items-center space-x-5">
-                <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
-                  <svg
-                    className="h-full w-full text-gray-300"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </span>
-                <button
-                  type="button"
-                  className="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            <div className="grid grid-cols-3 gap-6">
+              <div className="col-span-6 sm:col-span-4">
+                <label
+                  htmlFor="code"
+                  className="block text-sm font-medium text-gray-700"
                 >
-                  Change
-                </button>
+                  Product Code
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  id="code"
+                  autoComplete="code"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Cover photo
+                Photos
               </label>
               <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                 <div className="space-y-1 text-center">
@@ -104,6 +98,7 @@ const AddProduct = () => {
                         id="file-upload"
                         name="file-upload"
                         type="file"
+                        multiple
                         className="sr-only"
                       />
                     </label>
