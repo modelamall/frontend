@@ -26,10 +26,10 @@ function CategorySection() {
               <div className="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
                 <div className="min-w-screen-xl absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
                   {category.map((item, i) => (
-                    <>
+                    <div key={item.id + "main"}>
                       {i < 5 && (
                         <Link
-                          key={item.name}
+                          key={item.id}
                           to={`/product/category/${item.id}`}
                           className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                         >
@@ -53,7 +53,7 @@ function CategorySection() {
                           </span>
                         </Link>
                       )}
-                    </>
+                    </div>
                   ))}
                 </div>
               </div>

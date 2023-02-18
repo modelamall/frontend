@@ -2,19 +2,16 @@ import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 
 const Wrapper = ({ children }) => {
-    return (
-      <>
+  return (
+    <>
       <div>
-        <div>
-          <NavBar  />
-        </div>
-        <div>
-          {children}
-        </div>
+        <NavBar/>
       </div>
-      <Footer/>
-      </>
-    );
-  };
-  
-  export default Wrapper;
+      <div>{children}</div>
+
+      <Footer />
+    </>
+  );
+};
+
+export default Wrapper;

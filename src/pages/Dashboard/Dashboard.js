@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
-import UserDashboard from "./UserDashboard"
 import StoreDashboard from "./StoreDashboard"
 import AdminDashboard from "./AdminDashboard"
 

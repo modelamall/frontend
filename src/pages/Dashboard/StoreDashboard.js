@@ -2,14 +2,9 @@ import DashboardLayout from "./DashboardLayout"
 import { Routes, Route } from "react-router-dom"
 import React, { Suspense } from 'react'
 import {
-    Bars3Icon,
-    CalendarIcon,
-    ChartBarIcon,
     FolderIcon,
     HomeIcon,
-    InboxIcon,
     UsersIcon,
-    XMarkIcon,
 } from '@heroicons/react/24/outline'
 const menuItems = [
     { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },

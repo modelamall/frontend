@@ -3,12 +3,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import { NavLink, useLocation } from "react-router-dom"
 import {
     Bars3Icon,
-    CalendarIcon,
-    ChartBarIcon,
-    FolderIcon,
-    HomeIcon,
-    InboxIcon,
-    UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 
