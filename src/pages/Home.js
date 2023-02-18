@@ -1,6 +1,6 @@
 import CategorySection from "../components/CategorySection/CategorySection";
 import HeroSection from "../components/HeroSection/HeroSection";
-import Products from "../components/Products/Products";
+import ProductHomeSection from "../components/Products/ProductHomeSection";
 
 const Home = () => {
   return (
@@ -12,6 +12,7 @@ const Home = () => {
             <CategorySection/>
         </div>
         <div>
+          <ProductHomeSection/>
         </div>
     </>
   );

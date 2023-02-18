@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
-function Footer() {
-
-
-
-    const [data,setData]= useState()
+const Footer = () => {
+  const [data, setData] = useState();
 
   return (
     <footer className="bg-gray-800" aria-labelledby="footer-heading">
@@ -131,6 +128,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
