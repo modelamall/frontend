@@ -163,10 +163,10 @@ const PopupProduct = ({ productId, setSingel }) => {
                         </h3>
 
                         <p className="text-2xl text-gray-900">
-                          {data?.data?.ProductVariations[0].price}₺
+                          {data?.data?.ProductVariations[selectedProduct].price}₺
                         </p>
                         <div className="mt-6">
-                          <p>{data?.data?.discription}</p>
+                          <p>{data?.data?.description}</p>
                         </div>
                       </section>
 

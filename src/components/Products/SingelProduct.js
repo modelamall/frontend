@@ -155,7 +155,7 @@ const SingelProduct = () => {
               <div
                 className="space-y-6 text-base text-gray-700"
                 dangerouslySetInnerHTML={{
-                  __html: responseData?.data?.discription,
+                  __html: responseData?.data?.description,
                 }}
               />
             </div>

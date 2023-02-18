@@ -18,86 +18,20 @@ const Wrapper = React.lazy(() => import("./components/Wrapper/Wrapper"));
 function App() {
   return (
     <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Wrapper>
-              <Suspense>
-                <Home />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/product/category/:id"
-          element={
-            <Wrapper>
-              <Suspense>
-                <Products />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/product/:id"
-          element={
-            <Wrapper>
-              <Suspense>
-                <SingelProduct />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Wrapper>
-              <Suspense>
-                <SignUp />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/signin"
-          element={
-            <Wrapper>
-              <Suspense>
-                <SignIn />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/signout"
-          element={
-            <Wrapper>
-              <Suspense>
-                <SignOut />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Wrapper>
-              <Suspense>
-                <Profile />
-              </Suspense>
-            </Wrapper>
-          }
-        />
-        <Route
-          path="dashboard/*"
-          element={
-            <Suspense>
-              <Dashboard />
-            </Suspense>
-          }
-        ></Route>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Wrapper><Suspense><Home /></Suspense></Wrapper>} />
+      <Route path="/product/category/:id" element={<Wrapper><Suspense><Products/></Suspense></Wrapper>} />
+      <Route path="/product/:id" element={<Wrapper><Suspense><SingelProduct /></Suspense></Wrapper>} />
+      <Route path="/signup" element={<Wrapper><Suspense><SignUp/></Suspense></Wrapper>} />
+      <Route path="/signin" element={<Wrapper><Suspense><SignIn/></Suspense></Wrapper>} />
+      <Route path="/signout" element={<Wrapper><Suspense><SignOut/></Suspense></Wrapper>} />
+      <Route path="/profile" element={<Wrapper><Suspense><Profile/></Suspense></Wrapper>} />
+      <Route path="dashboard/*" element={<Suspense><Dashboard/></Suspense>}>
+      <Route path="/*" element={<Wrapper><Suspense><NotFound/></Suspense></Wrapper>} />
+
+
+      </Route>
+    </Routes>
     </>
   );
 }
