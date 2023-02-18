@@ -26,8 +26,8 @@ function App() {
       <Route path="/signin" element={<Wrapper><Suspense><SignIn/></Suspense></Wrapper>} />
       <Route path="/signout" element={<Wrapper><Suspense><SignOut/></Suspense></Wrapper>} />
       <Route path="/profile" element={<Wrapper><Suspense><Profile/></Suspense></Wrapper>} />
-      <Route path="dashboard/*" element={<Suspense><Dashboard/></Suspense>}>
-      <Route path="/*" element={<Wrapper><Suspense><NotFound/></Suspense></Wrapper>} />
+      <Route path="/dashboard/*" element={<Suspense><Dashboard/></Suspense>}>
+      <Route path="*" element={<Wrapper><Suspense><NotFound/></Suspense></Wrapper>} />
 
 
       </Route>
