@@ -227,7 +227,7 @@ const ProfileInformation = () => {
                         onChange={(e) => {
                           setFormData({
                             ...formData,
-                            password: e.target.value,
+                            newPassword: e.target.value,
                           });
                         }}
                       />
