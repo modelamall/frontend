@@ -16,7 +16,8 @@ import { ChevronDownIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { ProductContext } from "../../context/ProductContext";
 import useFetch from "../../hooks/UseFetch";
 import PopupProduct from "./PopupProduct";
-import "./style.css"
+import "./style.css";
+import { useParams } from "react-router-dom";
 
 const breadcrumbs = [{ id: 1, name: "Men", href: "#" }];
 
@@ -27,13 +28,24 @@ function classNames(...classes) {
 const Products = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const { data, loading, error } = useFetch("product/all");
   const { products, setProducts } = useContext(ProductContext);
   const [singel, setSingel] = useState(false);
   const [productId, setProductId] = useState();
-  const [categorytId, setCategorytId] = useState(12);
-  const { data: filtersData, loading: filtersLoading, error: filtersError } = useFetch(`filter/${categorytId}`);
+  const { id } = useParams();
+  const { data, loading, error } = useFetch("product/all");
+  const [categorytId, setCategorytId] = useState(id);
+  const {
+    data: filtersData,
+    loading: filtersLoading,
+    error: filtersError,
+  } = useFetch(`filter/${categorytId}`);
   if (!loading) setProducts(data.data);
+
+  const activeFilter = (event) => {
+    event.preventDefault()
+    const jsonData = JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
+    console.log(jsonData);
+  };
 
   return (
     <div className="bg-white">
@@ -83,7 +95,7 @@ const Products = () => {
                   </div>
 
                   {/* Filters */}
-                  <form className="mt-4">
+                  <form onSubmit={activeFilter} className="mt-4">
                     {filtersData?.data.map((section) => (
                       <Disclosure
                         as="div"
@@ -110,32 +122,35 @@ const Products = () => {
                             </legend>
                             <Disclosure.Panel className="px-4 pt-4 pb-2">
                               <div className="space-y-6">
-                                {section.Property.PropertiesValues.map((option, optionIdx) => (
-                                  <div
-                                    key={option.value}
-                                    className="flex items-center"
-                                  >
-                                    <input
-                                      id={`${section.id}-${optionIdx}-mobile`}
-                                      name={`${section.id}[]`}
-                                      defaultValue={option.value}
-                                      type="checkbox"
-                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    />
-                                    <label
-                                      htmlFor={`${section.id}-${optionIdx}-mobile`}
-                                      className="ml-3 text-sm text-gray-500"
+                                {section.Property.PropertiesValues.map(
+                                  (option) => (
+                                    <div
+                                      key={option.id}
+                                      className="flex items-center"
                                     >
-                                      {option.value}
-                                    </label>
-                                  </div>
-                                ))}
+                                      <input
+                                        id={`${option.id}`}
+                                        name={`${section.id}-op-${option.id}`}
+                                        defaultValue={option.id}
+                                        type="checkbox"
+                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                      />
+                                      <label
+                                        htmlFor={`${option.id}`}
+                                        className="ml-3 text-sm text-gray-500"
+                                      >
+                                        {option.value}
+                                      </label>
+                                    </div>
+                                  )
+                                )}
                               </div>
                             </Disclosure.Panel>
                           </fieldset>
                         )}
                       </Disclosure>
                     ))}
+                    <button type="submit">Submit</button>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
@@ -206,29 +221,23 @@ const Products = () => {
               <div className="hidden lg:block">
                 <form className="space-y-10 divide-y divide-gray-200">
                   {filtersData?.data.map((section) => (
-                    <div
-                      key={section.id}
-                      className={"pt-10"}
-                    >
+                    <div key={section.id} className={"pt-10"}>
                       <fieldset>
                         <legend className="block text-sm font-medium text-gray-900">
                           {section.Property.type}
                         </legend>
                         <div className="space-y-3 pt-6">
-                          {section.Property.PropertiesValues.map((option, optionIdx) => (
-                            <div
-                              key={option.id}
-                              className="flex items-center"
-                            >
+                          {section.Property.PropertiesValues.map((option) => (
+                            <div key={option.id} className="flex items-center">
                               <input
-                                id={`${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
+                                id={`${option.id}`}
+                                name={`op-${option.id}`}
                                 defaultValue={option.value}
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
-                                htmlFor={`${section.id}-${optionIdx}`}
+                                htmlFor={`${section.id}`}
                                 className="ml-3 text-sm text-gray-600"
                               >
                                 {option.value}

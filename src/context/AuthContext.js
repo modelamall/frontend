@@ -8,6 +8,7 @@ const UserManager = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   
   const signIn = (userData, userToken) => {
+    console.log(userData)
     setUser(userData);
     setToken(userToken);
     localStorage.setItem("user", JSON.stringify(userData));

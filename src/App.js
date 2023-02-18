@@ -12,6 +12,7 @@ const SignUp = React.lazy(() => import("./pages/SignUp"));
 const SignIn = React.lazy(() => import("./pages/SignIn"));
 const SignOut = React.lazy(() => import("./pages/SignOut"));
 const Profile = React.lazy(() => import("./pages/Profile"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
 const Wrapper = React.lazy(() => import("./components/Wrapper/Wrapper"));
 
 function App() {

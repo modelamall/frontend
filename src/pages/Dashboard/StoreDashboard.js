@@ -1,6 +1,6 @@
 import DashboardLayout from "./DashboardLayout"
 import { Routes, Route } from "react-router-dom"
-
+import React, { Suspense } from 'react'
 import {
     Bars3Icon,
     CalendarIcon,
@@ -18,11 +18,12 @@ const menuItems = [
     { name: 'Profile', to: '/dashboard/profile', icon: FolderIcon },
 ]
 
+const AddProduct = React.lazy(() => import("./AddProduct"));
 const StoreDashboard = () => {
     return (
         <DashboardLayout navigation={menuItems}>
             <Routes>
-                <Route path="products" element={<>Products</>} />
+                <Route path="addproducts" element={<Suspense><AddProduct/></Suspense>} />
                 <Route path="profile" element={<>Profile</>} />
                 <Route path="signout" element={<>signout</>} />
                 <Route path="*" element={<>...</>} />
