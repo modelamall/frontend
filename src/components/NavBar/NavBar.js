@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
 import { AuthContext } from "../../context/AuthContext";
 
-import { Link, NavLink} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -142,7 +142,7 @@ const NavBar = () => {
                 <div>
                   <button
                     type="button"
-                    calssName="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
                     <Link to={"/signin"}>Sign In</Link>
                   </button>
