@@ -47,6 +47,7 @@ const AddProduct = () => {
     fetchData();
     fetchProperty();
   }, [categorytId]);
+  console.log(categorytId);
   return (
     <>
       <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6">
@@ -236,17 +237,17 @@ const AddProduct = () => {
           {productVariations.map((item, i) => {
             return (
               <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:p-6 ">
-                <div className="flex justify-end">
+                {productVariations.length > 1 && <div className="flex justify-end">
                   <button
-                    onClick={() =>
-                      setProductVariations([...productVariations, ""])
+                    onClick={() =>{productVariations.splice(i, 1);
+                      setProductVariations([...productVariations])}
                     }
                     type="button"
-                    className="inline-flex items-center rounded-full border border-transparent p-2 text-white shadow-sm hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    className=" text-white inline-flex items-center rounded-full border border-transparent p-2 shadow-sm bg-red-500 hover:bg-red-600  focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                   >
-                    <XMarkIcon class="h-6 w-6 text-gray-500" />
+                    <XMarkIcon class="h-6 w-6 " />
                   </button>
-                </div>
+                </div>}
                 <div
                   key={i + "productVariations"}
                   className="md:grid pt-5 md:grid-cols-3 md:gap-6 "
