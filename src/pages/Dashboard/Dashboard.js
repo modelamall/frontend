@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminDashboard from "../../components/Dashboard/AdminDashboard";
 import StoreDashboard from "../../components/Dashboard/StoreDashboard";
 import { AuthContext } from "../../context/AuthContext";
+import StoreSignIn from "./StoreSignIn";
 
 const Dashboard = () => {
   const { dashboardUser, dashboardToken } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const Dashboard = () => {
       {!dashboardToken && (
         <Routes>
           <Route path="/admin/*" element={<>AdminSignIn</>} />
-          <Route path="*" element={<>StoreSignIn</>} />
+          <Route path="*" element={<StoreSignIn/>} />
         </Routes>
       )}
     </>
