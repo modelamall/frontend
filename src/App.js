@@ -2,6 +2,7 @@ import "./App.css";
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Notification from "./components/Notification/Notification";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const SingelProduct = React.lazy(() =>
@@ -32,6 +33,7 @@ function App() {
 
       </Route>
     </Routes>
+    <Notification/>
     </>
   );
 }
