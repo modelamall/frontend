@@ -54,7 +54,6 @@ const Products = () => {
     const jsonData = JSON.stringify(
       Object.fromEntries(new FormData(event.target).entries())
     );
-    console.log(jsonData);
   };
 
   return (

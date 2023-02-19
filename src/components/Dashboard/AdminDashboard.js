@@ -5,7 +5,7 @@ import {
     HomeIcon,
     UsersIcon,
 } from '@heroicons/react/24/outline'
-import PersonalInfo from "../../pages/Profile"
+import PersonalInfo from "../../pages/Dashboard/AdminProfile"
 const menuItems = [
     { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
     { name: 'Orders', to: '/dashboard/orders', icon: UsersIcon },
