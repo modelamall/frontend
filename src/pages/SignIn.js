@@ -2,8 +2,11 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { NotificationCXT } from "../context/NotiContext";
+
 
 const SignIn = () => {
+  const {toggleOn } = useContext(NotificationCXT);
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,8 +27,7 @@ const SignIn = () => {
         body: JSON.stringify(formData),
       });
       const json = await res.json();
-      window.alert(json.messages);
-      console.log(json);
+      toggleOn(json?.messages, json?.success);
       if (json.success) {
         signIn(json.data.user, json.data.token);
         setLoading(false);
