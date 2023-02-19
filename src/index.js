@@ -7,17 +7,20 @@ import UserManager from "./context/AuthContext";
 import ProductManager from "./context/ProductContext";
 import CategoryManager from "./context/CategoryContext";
 import { BrowserRouter } from "react-router-dom";
+import NotiContext from "./context/NotiContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <UserManager>
-      <ProductManager>
-        <CategoryManager>
-          <App />
-        </CategoryManager>
-      </ProductManager>
-    </UserManager>
+    <NotiContext>
+      <UserManager>
+        <ProductManager>
+          <CategoryManager>
+            <App />
+          </CategoryManager>
+        </ProductManager>
+      </UserManager>
+    </NotiContext>
   </BrowserRouter>
 );
 

@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { NotificationCXT } from "../context/NotiContext";
+import { AuthContext } from "../../context/AuthContext";
+import { NotificationCXT } from "../../context/NotiContext";
 
 
-const SignIn = () => {
+const StoreSignIn = () => {
   const {toggleOn } = useContext(NotificationCXT);
-  const { signIn } = useContext(AuthContext);
+  const { dashboardSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     account: "",
@@ -16,10 +16,10 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const signInUser = async (formData) => {
+  const signInStore = async (formData) => {
     setLoading(true);
     try {
-      const res = await fetch(process.env.REACT_APP_API + "/user/login", {
+      const res = await fetch(process.env.REACT_APP_API + "/store/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,10 +29,10 @@ const SignIn = () => {
       const json = await res.json();
       toggleOn(json?.messages, json?.success);
       if (json.success) {
-        signIn(json.data.user, json.data.token);
+        dashboardSignIn(json.data.store, json.data.token);
         setLoading(false);
         setError(null);
-        navigate("/");
+        navigate("/Dashboard/");
       }
     } catch (error) {
       setError(error);
@@ -48,9 +48,8 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await signInUser(formData);
+    await signInStore(formData);
   };
-  console.log(formData);
 
   return (
     <>
@@ -62,7 +61,7 @@ const SignIn = () => {
             alt="Your Company"
           /> */}
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Sign in to your Dashboard "Store"
           </h2>
         </div>
 
@@ -173,4 +172,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default StoreSignIn;

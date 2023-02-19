@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { NotificationCXT } from "../context/NotiContext";
+import { AuthContext } from "../../context/AuthContext";
+import { NotificationCXT } from "../../context/NotiContext";
 
 
-const SignIn = () => {
+const AdminSignIn = () => {
   const {toggleOn } = useContext(NotificationCXT);
-  const { signIn } = useContext(AuthContext);
+  const { dashboardSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     account: "",
@@ -16,10 +16,10 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const signInUser = async (formData) => {
+  const signInAdmin = async (formData) => {
     setLoading(true);
     try {
-      const res = await fetch(process.env.REACT_APP_API + "/user/login", {
+      const res = await fetch(process.env.REACT_APP_API + "/admin/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,10 +29,10 @@ const SignIn = () => {
       const json = await res.json();
       toggleOn(json?.messages, json?.success);
       if (json.success) {
-        signIn(json.data.user, json.data.token);
+        dashboardSignIn(json.data.admin, json.data.token);
         setLoading(false);
         setError(null);
-        navigate("/");
+        navigate("/dashboard/");
       }
     } catch (error) {
       setError(error);
@@ -48,19 +48,14 @@ const SignIn = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await signInUser(formData);
+    await signInAdmin(formData);
   };
-  console.log(formData);
 
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          {/*  <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          /> */}
+          
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
@@ -85,7 +80,7 @@ const SignIn = () => {
                   <input
                     onChange={handleOnChange}
                     id="account"
-                    placeholder="Phone number, username or email"
+                    placeholder="Username or email"
                     name="account"
                     type="account"
                     autoComplete="account"
@@ -150,22 +145,6 @@ const SignIn = () => {
                 </button>
               </div>
             </form>
-
-            <div className="mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">Or</span>
-                </div>
-              </div>
-              <div className="relative flex justify-center mt-5 text-sm">
-                <span className="bg-white px-2 text-black-500">
-                  Don't have an account ? <Link className="text-blue-500" to={"/signup"}>Sign Up</Link>
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -173,4 +152,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default AdminSignIn;
