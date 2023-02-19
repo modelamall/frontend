@@ -8,7 +8,7 @@ import {
     SquaresPlusIcon
 } from '@heroicons/react/24/outline'
 const menuItems = [
-    { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
+    { name: 'Home', to: '/dashboard/', icon: HomeIcon },
     { name: 'Products', to: '/dashboard/products', icon: UsersIcon },
     { name: 'Add New Products', to: '/dashboard/addproducts', icon: SquaresPlusIcon },
     { name: 'Profile', to: '/dashboard/profile', icon: FolderIcon },

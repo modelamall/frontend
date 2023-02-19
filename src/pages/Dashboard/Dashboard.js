@@ -1,16 +1,34 @@
-import { useContext } from "react"
-import { AuthContext } from "../../context/AuthContext"
-import StoreDashboard from "./StoreDashboard"
-import AdminDashboard from "./AdminDashboard"
+import { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
+import AdminDashboard from "../../components/Dashboard/AdminDashboard";
+import StoreDashboard from "../../components/Dashboard/StoreDashboard";
+import { AuthContext } from "../../context/AuthContext";
 
 const Dashboard = () => {
-    const { user } = useContext(AuthContext)
-    return (
-        <>
-            {user?.admin?.type === 'Admin' && <AdminDashboard />}
-            {user?.store?.type === 'Store' && <StoreDashboard />}
-        </>
-    )
-}
+  const { dashboardUser, dashboardToken } = useContext(AuthContext);
+  return (
+    <>
+      {dashboardToken && (
+        <Routes>
+          <Route
+            path="*"
+            element={
+              <>
+                {dashboardUser?.type === "Admin" && <AdminDashboard />}
+                {dashboardUser?.type === "Store" && <StoreDashboard />}
+              </>
+            }
+          />
+        </Routes>
+      )}
+      {!dashboardToken && (
+        <Routes>
+          <Route path="/admin/*" element={<>AdminSignIn</>} />
+          <Route path="*" element={<>StoreSignIn</>} />
+        </Routes>
+      )}
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

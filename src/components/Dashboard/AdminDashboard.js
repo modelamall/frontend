@@ -5,14 +5,14 @@ import {
     HomeIcon,
     UsersIcon,
 } from '@heroicons/react/24/outline'
-import PersonalInfo from "../Profile"
+import PersonalInfo from "../../pages/Profile"
 const menuItems = [
     { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
     { name: 'Orders', to: '/dashboard/orders', icon: UsersIcon },
     { name: 'Profile', to: '/dashboard/profile', icon: FolderIcon },
 ]
 
-const UserDashboard = () => {
+const AdminDashboard = () => {
     return (
         <DashboardLayout navigation={menuItems}>
             <Routes>
@@ -25,4 +25,4 @@ const UserDashboard = () => {
     )
 }
 
-export default UserDashboard
+export default AdminDashboard
