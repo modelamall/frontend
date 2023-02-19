@@ -29,7 +29,7 @@ const StoreSignIn = () => {
       const json = await res.json();
       toggleOn(json?.messages, json?.success);
       if (json.success) {
-        dashboardSignIn(json.data.user, json.data.token);
+        dashboardSignIn(json.data.store, json.data.token);
         setLoading(false);
         setError(null);
         navigate("/Dashboard/");
