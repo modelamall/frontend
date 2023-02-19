@@ -106,7 +106,7 @@ export default function DashboardLayout({ navigation = [], children }) {
                                                 <div>
                                                     <img
                                                         className="inline-block h-10 w-10 rounded-full"
-                                                        src= {dashboardUser?.logo ? dashboardUser?.logo || dashboardUser?.avatar : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
+                                                        src= {(dashboardUser?.logo || dashboardUser?.avatar)  ? (dashboardUser?.logo || dashboardUser?.avatar) : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
                                                         alt=""
                                                     />
                                                 </div>
@@ -165,7 +165,7 @@ export default function DashboardLayout({ navigation = [], children }) {
                                     <div>
                                         <img
                                             className="inline-block h-9 w-9 rounded-full"
-                                            src= {dashboardUser?.logo ? dashboardUser?.logo: "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
+                                            src= {(dashboardUser?.logo || dashboardUser?.avatar)  ? (dashboardUser?.logo || dashboardUser?.avatar) : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
                                             alt=""
                                         />
                                     </div>

@@ -12,7 +12,7 @@ const ProfileInformation = () => {
     username: dashboardUser.username,
     email: dashboardUser.email,
     currentPassword: "",
-    newPassword: "",
+    password: "",
     passwordConfirmation: "",
     avatar: dashboardUser.avatar,
   });
@@ -38,7 +38,7 @@ const ProfileInformation = () => {
       setFormData({
         ...json.data,
         currentPassword: "",
-        newPassword: "",
+        password: "",
         passwordConfirmation: "",
       });
       setDashboardUser(json.data);
@@ -186,22 +186,22 @@ const ProfileInformation = () => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label
-                        htmlFor="newPassword"
+                        htmlFor="password"
                         className="block text-sm font-medium text-gray-700"
                       >
                         New password
                       </label>
                       <input
-                        value={formData.newPassword}
+                        value={formData.password}
                         type="password"
-                        name="newPassword"
-                        id="newPassword"
+                        name="password"
+                        id="password"
                         autoComplete="new-password"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         onChange={(e) => {
                           setFormData({
                             ...formData,
-                            newPassword: e.target.value,
+                            password: e.target.value,
                           });
                         }}
                       />
