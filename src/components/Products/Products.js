@@ -32,8 +32,16 @@ const Products = () => {
   const [singel, setSingel] = useState(false);
   const [productId, setProductId] = useState();
   const { id } = useParams();
-  const { data, loading, error } = useFetch("product/all");
   const [categorytId, setCategorytId] = useState(id);
+  const { data, loading, error } = useFetch("product/filter", {
+    method: "post",
+    body: JSON.stringify({
+      categorytId: categorytId,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   const {
     data: filtersData,
     loading: filtersLoading,
@@ -42,8 +50,10 @@ const Products = () => {
   if (!loading) setProducts(data.data);
 
   const activeFilter = (event) => {
-    event.preventDefault()
-    const jsonData = JSON.stringify(Object.fromEntries(new FormData(event.target).entries()))
+    event.preventDefault();
+    const jsonData = JSON.stringify(
+      Object.fromEntries(new FormData(event.target).entries())
+    );
     console.log(jsonData);
   };
 
@@ -96,6 +106,59 @@ const Products = () => {
 
                   {/* Filters */}
                   <form onSubmit={activeFilter} className="mt-4">
+                    <Disclosure
+                      as="div"
+                      className="border-t border-gray-200 pt-4 pb-4"
+                    >
+                      {({ open }) => (
+                        <fieldset>
+                          <legend className="w-full px-2">
+                            <Disclosure.Button className="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500">
+                              <span className="text-sm font-medium text-gray-900">
+                                Price
+                              </span>
+                              <span className="ml-6 flex h-7 items-center">
+                                <ChevronDownIcon
+                                  className={classNames(
+                                    open ? "-rotate-180" : "rotate-0",
+                                    "h-5 w-5 transform"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </Disclosure.Button>
+                          </legend>
+                          <Disclosure.Panel className="px-4 pt-4 pb-2">
+                            <div className="flex items-center">
+                              <label
+                                htmlFor={`minPrice`}
+                                className="ml-3 w-1/3 text-sm text-gray-600"
+                              >
+                                Min Price
+                              </label>
+                              <input
+                                name={`minPrice`}
+                                type="text"
+                                className="mt-1 block w-2/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="flex items-center">
+                              <label
+                                htmlFor={`maxPrice`}
+                                className="ml-3 w-1/3 text-sm text-gray-600"
+                              >
+                                Max Price
+                              </label>
+                              <input
+                                name={`maxPrice`}
+                                type="text"
+                                className="mt-1 block w-2/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                          </Disclosure.Panel>
+                        </fieldset>
+                      )}
+                    </Disclosure>
                     {filtersData?.data.map((section) => (
                       <Disclosure
                         as="div"
@@ -150,7 +213,14 @@ const Products = () => {
                         )}
                       </Disclosure>
                     ))}
-                    <button type="submit">Submit</button>
+                    <div className="m-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                      <button
+                        type="submit"
+                        className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        Filter
+                      </button>
+                    </div>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
@@ -220,6 +290,41 @@ const Products = () => {
 
               <div className="hidden lg:block">
                 <form className="space-y-10 divide-y divide-gray-200">
+                  <div className={"pt-10"}>
+                    <fieldset>
+                      <legend className="block text-sm font-medium text-gray-900">
+                        Price
+                      </legend>
+                      <div className="space-y-3 pt-6">
+                        <div className="flex items-center">
+                          <label
+                            htmlFor={`minPrice`}
+                            className="ml-3 w-1/3 text-sm text-gray-600"
+                          >
+                            Min Price
+                          </label>
+                          <input
+                            name={`minPrice`}
+                            type="text"
+                            className="mt-1 block w-2/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="flex items-center">
+                          <label
+                            htmlFor={`maxPrice`}
+                            className="ml-3 w-1/3 text-sm text-gray-600"
+                          >
+                            Max Price
+                          </label>
+                          <input
+                            name={`maxPrice`}
+                            type="text"
+                            className="mt-1 block w-2/3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
                   {filtersData?.data.map((section) => (
                     <div key={section.id} className={"pt-10"}>
                       <fieldset>
@@ -248,6 +353,15 @@ const Products = () => {
                       </fieldset>
                     </div>
                   ))}
+
+                  <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                    <button
+                      type="submit"
+                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      Filter
+                    </button>
+                  </div>
                 </form>
               </div>
             </aside>
@@ -264,16 +378,16 @@ const Products = () => {
                 {products.map((product) => (
                   <>
                     <div
-                      key={product.id}
+                      key={product.productId}
                       onClick={() => {
-                        setProductId(product.id);
+                        setProductId(product.productId);
                         setSingel(true);
                       }}
                     >
                       <div className="relative">
                         <div className="relative h-72 w-full overflow-hidden rounded-lg">
                           <img
-                            src={product.Pictures[0]?.url}
+                            src={product.url}
                             alt={product.title}
                             className="h-full w-full object-cover object-center"
                           />
@@ -283,7 +397,7 @@ const Products = () => {
                             {product.title}
                           </h3>
                           <p className="discriptionStyle mt-1 text-sm text-gray-500">
-                            {product.discription}
+                            {product.description}
                           </p>
                         </div>
                         <div className="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
@@ -292,7 +406,7 @@ const Products = () => {
                             className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                           />
                           <p className="relative text-lg font-semibold text-white">
-                            ${product.ProductVariations[0].price}
+                            ${product.price}
                           </p>
                         </div>
                       </div>

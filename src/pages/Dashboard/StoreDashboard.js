@@ -2,19 +2,15 @@ import DashboardLayout from "./DashboardLayout"
 import { Routes, Route } from "react-router-dom"
 import React, { Suspense } from 'react'
 import {
-    Bars3Icon,
-    CalendarIcon,
-    ChartBarIcon,
     FolderIcon,
     HomeIcon,
-    InboxIcon,
     UsersIcon,
-    XMarkIcon,
+    SquaresPlusIcon
 } from '@heroicons/react/24/outline'
 const menuItems = [
     { name: 'Dashboard', to: '/dashboard/dashboard', icon: HomeIcon },
     { name: 'Products', to: '/dashboard/products', icon: UsersIcon },
-    { name: 'Orders', to: '/dashboard/orders', icon: UsersIcon },
+    { name: 'Add New Products', to: '/dashboard/addproducts', icon: SquaresPlusIcon },
     { name: 'Profile', to: '/dashboard/profile', icon: FolderIcon },
 ]
 

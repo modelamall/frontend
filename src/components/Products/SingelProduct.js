@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import useFetch from "../../hooks/UseFetch";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useParams } from "react-router-dom";
 
 function classNames(...classes) {
@@ -13,7 +11,6 @@ const SingelProduct = () => {
   const [responseData, setResponseData] = useState(null);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[0]);
   const [selectedProduct, setselectedProduct] = useState(0);
   const { id } = useParams();
@@ -155,7 +152,7 @@ const SingelProduct = () => {
               <div
                 className="space-y-6 text-base text-gray-700"
                 dangerouslySetInnerHTML={{
-                  __html: responseData?.data?.discription,
+                  __html: responseData?.data?.description,
                 }}
               />
             </div>

@@ -14,9 +14,9 @@ const product = {
     "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
   imageAlt: "Two each of gray, white, and black shirts arranged on table.",
   colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
+    { name: "White", calssName: "bg-white", selectedClass: "ring-gray-400" },
+    { name: "Gray", calssName: "bg-gray-200", selectedClass: "ring-gray-400" },
+    { name: "Black", calssName: "bg-gray-900", selectedClass: "ring-gray-900" },
   ],
   sizes: [
     { name: "XXS", inStock: true },
@@ -163,10 +163,10 @@ const PopupProduct = ({ productId, setSingel }) => {
                         </h3>
 
                         <p className="text-2xl text-gray-900">
-                          {data?.data?.ProductVariations[0].price}₺
+                          {data?.data?.ProductVariations[selectedProduct].price}₺
                         </p>
                         <div className="mt-6">
-                          <p>{data?.data?.discription}</p>
+                          <p>{data?.data?.description}</p>
                         </div>
                       </section>
 

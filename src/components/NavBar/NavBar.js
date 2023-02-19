@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
 import { AuthContext } from "../../context/AuthContext";
 
-import { Link, NavLink, Navigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -14,32 +14,30 @@ const NavBar = () => {
   const { category, setCategory } = useContext(CategoryContext);
   const { user, token } = useContext(AuthContext);
 
-  const { data, loading, error } = useFetch("category/allcategories");
+  const { data, loading } = useFetch("category/allcategories");
   if (!loading) {
     setCategory(data.data);
   }
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow">
+    <header className="bg-white z-50 relative shadow">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
         <div className="relative flex h-16 justify-between">
           <div className="relative z-10 flex px-2 lg:px-0">
             <div className="flex flex-shrink-0 items-center">
-              <Link
-              to={"/"}
-              >
-              <img
-                className="block h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Your Company"
-              /></Link>
-              
+              <Link to={"/"}>
+                <img
+                  className="block h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  alt="Your Company"
+                />
+              </Link>
             </div>
           </div>
           <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
             <div className="w-full sm:max-w-lg">
-              <label for="search" className="sr-only">
+              <label htmlFor="search" className="sr-only">
                 Search
               </label>
               <div className="relative">
@@ -95,7 +93,13 @@ const NavBar = () => {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src={user.avatar.split('/').findIndex(link => link == 'null') == -1 ?   user.avatar :"https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png" }
+                      src={
+                        user.avatar
+                          .split("/")
+                          .findIndex((link) => link == "null") == -1
+                          ? user.avatar
+                          : "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
+                      }
                       alt=""
                     />
                   </button>
@@ -107,12 +111,12 @@ const NavBar = () => {
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
-                    tabindex="-1"
+                    tabIndex="-1"
                   >
                     <Link
                       className="block py-2 px-4 text-sm text-gray-700"
                       role="menuitem"
-                      tabindex="-1"
+                      tabIndex="-1"
                       id="user-menu-item-0"
                       to={"/profile"}
                     >
@@ -121,10 +125,9 @@ const NavBar = () => {
                     <Link
                       className="block py-2 px-4 text-sm text-gray-700"
                       role="menuitem"
-                      tabindex="-1"
+                      tabIndex="-1"
                       id="user-menu-item-0"
                       to={"/signout"}
-
                     >
                       Sign Out
                     </Link>
@@ -139,15 +142,14 @@ const NavBar = () => {
                 <div>
                   <button
                     type="button"
-                    class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    <Link to={"/signin"} >Sign In</Link>
-                    
+                    <Link to={"/signin"}>Sign In</Link>
                   </button>
                   <Link
                     className=" py-2 px-4 text-sm text-gray-700"
                     role="menuitem"
-                    tabindex="-1"
+                    tabIndex="-1"
                     id="user-menu-item-0"
                     to={"/signup"}
                   >
@@ -171,7 +173,7 @@ const NavBar = () => {
                     : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
                 }
                 to={`/product/category/${item.id}`}
-                
+                key={item.id}
               >
                 {item.name}
               </NavLink>
@@ -192,6 +194,7 @@ const NavBar = () => {
                       : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 block rounded-md py-2 px-3 text-base font-medium"
                   }
                   to={`/product/category/${item.id}`}
+                  key={item.id}
                 >
                   {item.name}
                 </NavLink>
@@ -204,7 +207,11 @@ const NavBar = () => {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    src={user?.avatar ? user?.avatar : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg" }
+                    src={
+                      user?.avatar
+                        ? user?.avatar
+                        : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg"
+                    }
                     alt=""
                   />
                 </div>
@@ -227,7 +234,7 @@ const NavBar = () => {
                 <Link
                   className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                   to={"/signout"}
-                  >
+                >
                   Sign Out
                 </Link>
               </div>
