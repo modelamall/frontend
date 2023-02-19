@@ -30,10 +30,12 @@ const SignUp = () => {
 
       const json = await res.json();
       window.alert(json.messages)
-      if (json.success)
+      if (json.success){
         navigate('/signin')
-      setLoading(false);
-      setError(null);
+        setLoading(false);
+        setError(null);
+      }
+       
     } catch (error) {
       setError(error)
       setLoading(false)

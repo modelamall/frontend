@@ -1,7 +1,7 @@
 import Address from "../components/Address/Address";
 import UserAddresses from "../components/UserProfile/Addresses";
 import ProfileInformation from "../components/UserProfile/ProfileInfo";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 
@@ -18,13 +18,13 @@ const PersonalInfo = () => {
       {token ? (
         <div>
           <div>
-            <ProfileInformation />
+            <ProfileInformation  />
           </div>
           <div>
             <Address />
           </div>
           <div>
-            <UserAddresses />
+            <UserAddresses  />
           </div>
         </div>
       ) : null}
