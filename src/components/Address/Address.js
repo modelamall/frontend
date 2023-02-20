@@ -7,13 +7,6 @@ const Address = () => {
   const [cities, setCities] = useState([]);
   const [provinceId, setProvinceId] = useState(0);
 
-  const [data, setData] = useState({
-    cityId: +user.Addresses.cityId,
-    address: user.Addresses.address,
-    title: user.Addresses.title,
-    postCode: user.Addresses.postCode,
-  });
-
   useEffect(() => {
     const allProvinces = async () => {
       const res = await fetch(
@@ -40,51 +33,36 @@ const Address = () => {
     citiesByProvince(provinceId);
   }, [provinceId]);
 
-  const handleProvinceChange = (e) => {
-    setProvinceId(e.target.value);
-  };
-
-  const handleCityChange = (event) => {
-    const { value } = event.target;
-    setData((prevData) => ({ ...prevData, cityId: +value }));
-  };
-
-  const handleOnChange = (event) => {
-    const { name, value } = event.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-  };
 
   const addAddress = async (data) => {
     try {
+      const formDataObj = {};
+      data.forEach((value, key) => (formDataObj[key] = value));
       const res = await fetch(process.env.REACT_APP_API + "/address", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formDataObj),
       });
 
       const json = await res.json();
       window.alert(json.messages);
       if (json.success) {
-        user.Addresses.push(json.data);
-        setUser(user);
-        setData({
-          cityId: 0,
-          address: "",
-          title: "",
-          postCode: "",
-        });
+        const newUser = {...user}
+        newUser.Addresses.push(json.data);
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser))
       }
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addAddress(data);
+   await addAddress(new FormData(e.target));
   };
   return (
     <>
@@ -109,8 +87,6 @@ const Address = () => {
                         Address name
                       </label>
                       <input
-                        value={data.title}
-                        onChange={handleOnChange}
                         type="text"
                         name="title"
                         id="title"
@@ -127,11 +103,10 @@ const Address = () => {
                         City
                       </label>
                       <select
-                        value={provinceId}
-                        onChange={handleProvinceChange}
                         type="text"
-                        name="Province"
+                        name="province"
                         id="Province"
+                        onChange={(e) => setProvinceId(e.target.value)}
                         autoComplete="address-level1"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       >
@@ -152,8 +127,6 @@ const Address = () => {
                         Province
                       </label>
                       <select
-                        value={+data.cityId}
-                        onChange={handleCityChange}
                         type="number"
                         name="cityId"
                         id="cityId"
@@ -161,7 +134,7 @@ const Address = () => {
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       >
                         <option value=""></option>
-                        {cities.map((city) => (
+                        {cities?.map((city) => (
                           <option key={city.id} value={city.id}>
                             {city.name}
                           </option>
@@ -177,8 +150,6 @@ const Address = () => {
                         Postal code
                       </label>
                       <input
-                        value={data.postCode}
-                        onChange={handleOnChange}
                         type="number"
                         name="postCode"
                         id="postCode"
@@ -195,8 +166,6 @@ const Address = () => {
                         Address
                       </label>
                       <input
-                        value={data.address}
-                        onChange={handleOnChange}
                         type="text"
                         name="address"
                         id="address"

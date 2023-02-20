@@ -55,7 +55,6 @@ const SignUp = () => {
     event.preventDefault()
     await createUser(formData)
   }
-  console.log(formData);
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">

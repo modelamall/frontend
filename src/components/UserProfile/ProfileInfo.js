@@ -20,7 +20,6 @@ const ProfileInformation = () => {
   const updateUserProfile = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    console.log(form.get("avatar"));
     if (!form.get(`avatar`)) {
       form.set("avatar", formData.avatar);
     }
@@ -49,7 +48,6 @@ const ProfileInformation = () => {
     }
   };
 
-  console.log(formData);
   return (
     <>
       <div className=" max-w-6xl mx-auto py-5 mt-10 sm:mt-0 ">

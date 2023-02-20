@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PencilSquareIcon, TrashIcon,  } from "@heroicons/react/24/outline";
+
 
 const UserAddresses = () => {
   const { user } = useContext(AuthContext);
-
+ console.log(user.Addresses)
   return (
     <div className="max-w-6xl mx-auto pt-10 mt-10 sm:mt-0">
       <div className="mx-10 md:grid md:grid-cols-1 md:gap-0">
@@ -16,14 +16,14 @@ const UserAddresses = () => {
             </h3>
           </div>
 
-          <div className="max-w-6xl mx-auto pt-0 mt-10 sm:mt-0">
-            <div className="mb-6 px-6 md:flex md:flex-wrap">
-              {user?.Addresses?.map((address, index) => {
+          
+            <div className=" mb-6 px-6 md:flex md:flex-wrap">
+              {user?.Addresses?.map((address) => {
                 return (
-                  <div key={index} className="max-w-xxs md:w-1/2 md:px-5 mb-8">
+                  <div key={address.id} className="max-w-xxs md:w-1/2 md:px-5 mb-8">
                     <div className="border-solid border-2 border-gray-100 overflow-hidden shadow sm:rounded-md mt-10 md:col-span-1">
                       <div className="bg-gray-50 rounded-sm shadow-lg p-4">
-                        <h2 className="border-b-2 text-md font-medium text-gray-700 mb-4 mt-">
+                        <h2 className=" border-b-2 text-lg font-semibold text-gray-600 mb-4 mt-">
                           {address.title.substring(0, 25)}
                         </h2>
                         <ul>
@@ -34,31 +34,29 @@ const UserAddresses = () => {
                           </li>
                           <li className="mb-2 ">
                             <span className="text-gray-500">
-                              {address.cityId}
+                              {address.City?.name}
                             </span>
                           </li>
                           <li className="mb-2 ">
                             <span className="text-gray-500">
-                              {address.postCode}
+                              {address.postcode}
                             </span>
                           </li>
                         </ul>
                         <div className="flex justify-end mt-4">
-                          <button className="mr-4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-gray-800 border border-transparent rounded-lg active:bg-gray-900 hover:bg-gray-700 focus:outline-none focus:shadow-outline-gray">
-                            Edit
+                          <button className="mr-2 px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-700 border border-transparent rounded-lg active:bg-bule-900 hover:bg-blue-800 focus:outline-none focus:shadow-outline-gray">
+                           <PencilSquareIcon className="h-5 w-5 text-white" />
                           </button>
-                          <button className=" px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-gray-400 border border-transparent rounded-lg active:bg-gray-800 hover:bg-gray-700 focus:outline-none focus:shadow-outline-gray">
-                            <FontAwesomeIcon icon={faTrash} className="mr-2" />
-                            Delete
+                          <button className=" px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-bule-900 hover:bg-red-700 focus:outline-none focus:shadow-outline-gray">
+                            <TrashIcon type="button" className="h-5 w-5 text-white"/>
                           </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 );
-              })}
+              }).reverse()}
             </div>
-          </div>
         </div>
       </div>
     </div>

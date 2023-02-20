@@ -50,7 +50,6 @@ const SignIn = () => {
     event.preventDefault();
     await signInUser(formData);
   };
-  console.log(formData);
 
   return (
     <>
