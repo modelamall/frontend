@@ -161,7 +161,7 @@ const StoreSignIn = () => {
               </div>
               <div className="relative flex justify-center mt-5 text-sm">
                 <span className="bg-white px-2 text-black-500">
-                  Don't have an account ? <Link className="text-blue-500" to={"/signup"}>Sign Up</Link>
+                  Don't have an account ? <Link className="text-blue-500" to={"/dashboard"}>Sign Up</Link>
                 </span>
               </div>
             </div>

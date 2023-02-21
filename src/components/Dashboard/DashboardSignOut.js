@@ -8,7 +8,7 @@ const DashboardSignOut = () => {
     const nav = useNavigate()
     useEffect(()=>{
         dashboardSignOut()
-        nav('/')
+        nav('/dashboard')
     },[])
     return(
         <></>

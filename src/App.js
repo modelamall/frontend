@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Notification from "./components/Notification/Notification";
+import StoreSignUp from "./pages/Dashboard/StoreSignUp";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const SingelProduct = React.lazy(() =>
@@ -27,6 +28,7 @@ function App() {
       <Route path="/signin" element={<Wrapper><Suspense><SignIn/></Suspense></Wrapper>} />
       <Route path="/signout" element={<Wrapper><Suspense><SignOut/></Suspense></Wrapper>} />
       <Route path="/profile" element={<Wrapper><Suspense><Profile/></Suspense></Wrapper>} />
+      <Route path="/w" element={<Suspense><StoreSignUp/></Suspense>} />
       <Route path="*" element={<Wrapper><Suspense><NotFound/></Suspense></Wrapper>} />
       <Route path="/dashboard/*" element={<Suspense><Dashboard/></Suspense>}>
       
