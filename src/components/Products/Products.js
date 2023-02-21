@@ -51,9 +51,11 @@ const Products = () => {
 
   const activeFilter = (event) => {
     event.preventDefault();
-    const jsonData = JSON.stringify(
-      Object.fromEntries(new FormData(event.target).entries())
-    );
+    const formData = new FormData(event.target)
+      fetch('http://localhost:3002/api/v1/product/filter', {
+        method: 'post',
+        body: formData
+      })
   };
 
   return (
@@ -192,7 +194,7 @@ const Products = () => {
                                     >
                                       <input
                                         id={`${option.id}`}
-                                        name={`${section.id}-op-${option.id}`}
+                                        name={`op-[${option.id}][]`}
                                         defaultValue={option.id}
                                         type="checkbox"
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
