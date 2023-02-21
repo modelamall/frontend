@@ -3,6 +3,7 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import useFetch from "../../hooks/UseFetch";
+import NoDataAlert from "../Notification/NoDataAlert";
 
 const StoreGetProducts = () => {
     const { dashboardToken } = useContext(AuthContext);
@@ -14,7 +15,8 @@ const StoreGetProducts = () => {
 
 
   return (
-    <div>
+    <>
+    {data?.length > 0 && <div>
       <div className="mx-5 py-5 px-4 sm:py-24 sm:px-6 lg:px-0">
         <h1 className="text-left text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Your Products
@@ -81,7 +83,11 @@ const StoreGetProducts = () => {
           </section>
         </form>
       </div>
-    </div>
+    </div>}
+    {!(data?.length > 0) && 
+    <NoDataAlert/>
+    }
+    </>
   );
 };
 
