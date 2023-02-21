@@ -51,11 +51,11 @@ const Products = () => {
 
   const activeFilter = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target)
-      fetch('http://localhost:3002/api/v1/product/filter', {
-        method: 'post',
-        body: formData
-      })
+    const formData = new FormData(event.target);
+    fetch("http://localhost:3002/api/v1/product/filter", {
+      method: "post",
+      body: formData,
+    });
   };
 
   return (
@@ -107,6 +107,14 @@ const Products = () => {
 
                   {/* Filters */}
                   <form onSubmit={activeFilter} className="mt-4">
+                    <input
+                      type="text"
+                      value={categorytId}
+                      name="categorytId"
+                      style={{
+                        display: "none",
+                      }}
+                    />
                     <Disclosure
                       as="div"
                       className="border-t border-gray-200 pt-4 pb-4"
@@ -194,8 +202,9 @@ const Products = () => {
                                     >
                                       <input
                                         id={`${option.id}`}
-                                        name={`op-[${option.id}][]`}
+                                        name={`op_${section.id}[]`}
                                         defaultValue={option.id}
+                                        value={option.id}
                                         type="checkbox"
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       />

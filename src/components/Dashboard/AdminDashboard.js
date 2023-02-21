@@ -1,7 +1,6 @@
 import DashboardLayout from "./DashboardLayout"
 import { Routes, Route } from "react-router-dom"
 import {
-    FolderIcon,
     HomeIcon,
     UsersIcon,
     ArrowLeftOnRectangleIcon,
@@ -27,6 +26,7 @@ const DashboardSignOut = React.lazy(() => import("./DashboardSignOut"));
 const PersonalInfo = React.lazy(() => import("../../pages/Dashboard/AdminProfile"));
 const Admins = React.lazy(() => import("./Admins"));
 const Stores = React.lazy(() => import("./Stores"));
+const Users = React.lazy(() => import("./Users"));
 const AdminDashboard = () => {
     
 
@@ -36,7 +36,7 @@ const AdminDashboard = () => {
                 <Route path="home" element={<>Home</>} />
                 <Route path="admins" element={<Suspense><Admins/></Suspense>} />
                 <Route path="stores" element={<Suspense><Stores/></Suspense>} />
-                <Route path="users" element={<>Users</>} />
+                <Route path="users" element={<Suspense><Users/></Suspense>} />
                 <Route path="categories" element={<>Categories</>} />
                 <Route path="properties" element={<>Properties</>} />
                 <Route path="profile" element={<Suspense><PersonalInfo/></Suspense>} />
