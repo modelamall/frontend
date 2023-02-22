@@ -57,6 +57,9 @@ const Address = () => {
         newUser.Addresses.push(json.data);
         setUser(newUser);
         localStorage.setItem("user", JSON.stringify(newUser));
+        document.getElementById('title').value = '';
+        document.getElementById('postCode').value = '';
+        document.getElementById('address').value = '';
       }
     } catch (error) {
       console.error(error);
