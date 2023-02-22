@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { NotificationCXT } from "../../context/NotiContext";
 
 const Address = () => {
-  const { user, setUser, token } = useContext(AuthContext);
+  const { user, setUser, token, dashboardToken } = useContext(AuthContext);
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [provinceId, setProvinceId] = useState(0);
@@ -19,6 +20,7 @@ const Address = () => {
     };
     allProvinces();
   }, []);
+  const { toggleOn } = useContext(NotificationCXT);
 
   useEffect(() => {
     const citiesByProvince = async (provinceId) => {
@@ -33,7 +35,6 @@ const Address = () => {
     citiesByProvince(provinceId);
   }, [provinceId]);
 
-
   const addAddress = async (data) => {
     try {
       const formDataObj = {};
@@ -42,27 +43,29 @@ const Address = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token || dashboardToken}`,
         },
         body: JSON.stringify(formDataObj),
       });
+      console.log(formDataObj);
 
       const json = await res.json();
-      window.alert(json.messages);
+      toggleOn(json?.messages, json?.success);
+
       if (json.success) {
-        const newUser = {...user}
+        const newUser = { ...user };
         newUser.Addresses.push(json.data);
         setUser(newUser);
-        localStorage.setItem('user', JSON.stringify(newUser))
+        localStorage.setItem("user", JSON.stringify(newUser));
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   await addAddress(new FormData(e.target));
+    await addAddress(new FormData(e.target));
   };
   return (
     <>
@@ -103,7 +106,7 @@ const Address = () => {
                         City
                       </label>
                       <select
-                        type="text"
+                        type="number"
                         name="province"
                         id="Province"
                         onChange={(e) => setProvinceId(e.target.value)}
@@ -189,8 +192,6 @@ const Address = () => {
           </div>
         </div>
       </div>
-
-
     </>
   );
 };

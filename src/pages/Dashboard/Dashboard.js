@@ -4,7 +4,9 @@ import AdminDashboard from "../../components/Dashboard/AdminDashboard";
 import StoreDashboard from "../../components/Dashboard/StoreDashboard";
 import { AuthContext } from "../../context/AuthContext";
 const AdminSignIn = React.lazy(() => import("./AdminSignIn"));
+const StoreSignUp = React.lazy(() => import("./StoreSignUp"));
 const StoreSignIn = React.lazy(() => import("./StoreSignIn"));
+
 
 
 const Dashboard = () => {
@@ -27,7 +29,8 @@ const Dashboard = () => {
       {!dashboardToken && (
         <Routes>
           <Route path="/admin" element={<AdminSignIn />} />
-          <Route path="*" element={<StoreSignIn/>} />
+          <Route path="signin" element={<StoreSignIn/>} />
+          <Route path="*" element={<StoreSignUp/>} />
 
         </Routes>
       )}

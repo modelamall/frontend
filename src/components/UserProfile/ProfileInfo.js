@@ -81,9 +81,6 @@ const ProfileInformation = () => {
                   </label>
                 </div>
               </div>
-            </form>
-
-            <form onSubmit={updateUserProfile} action="#" method="POST">
               <div className="">
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
