@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import Alert from "../Notification/Alert";
 import { NotificationCXT } from "../../context/NotiContext";
 
@@ -45,9 +45,21 @@ const Users = () => {
           toggleOn(json?.messages, json?.success);
           setConformDelete(false);
           if (json?.success) {
-            let newData = [...users];
-            newData = newData.filter((i) => i.id != selectUserId);
-            setUsers(newData);
+            const getAllUser = async () => {
+              try {
+                const response = await fetch(`${process.env.REACT_APP_API}/user/all`, {
+                  headers: {
+                    Authorization: `Bearer ${dashboardToken}`,
+                  },
+                });
+                const json = await response.json();
+                if (!json?.success) {
+                  toggleOn(json?.messages, json?.success);
+                }
+                setUsers(json.data);
+              } catch (error) {}
+            };
+            getAllUser();
           }
         } catch (error) {}
       };
@@ -151,18 +163,28 @@ const Users = () => {
                           </span>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            Active
+                          <span
+                            className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                              user.deletedAt
+                                ? "text-red-800 bg-red-100"
+                                : "text-green-800 bg-green-100"
+                            } `}
+                          >
+                            {user.deletedAt && "Pasif"}
+                            {!user.deletedAt && "Active"}
                           </span>
                         </td>
                         <td className=" cursor-pointer relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <TrashIcon
-                            onClick={() => {
-                              setOpen(true);
-                              setSelectUserId(user.id);
-                            }}
-                            className="text-red-500 hover:text-red-700 w-6"
-                          />
+                        {!user.deletedAt && (
+                            <TrashIcon
+                              onClick={() => {
+                                setOpen(true);
+                                setSelectUserId(user.id);
+                              }}
+                              className="text-red-500 hover:text-red-700 w-6"
+                            />
+                          )}
+                          {user.deletedAt && <NoSymbolIcon className="text-gray-500 w-6"/>}
                         </td>
                       </tr>
                     ))}

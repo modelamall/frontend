@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import Alert from "../Notification/Alert";
 import { NotificationCXT } from "../../context/NotiContext";
 import AddAdmin from "./AddAdmin";
@@ -69,9 +69,26 @@ const Admins = () => {
           toggleOn(json?.messages, json?.success);
           setConformDelete(false);
           if (json?.success) {
-            let newData = [...admins];
-            newData = newData.filter((i) => i.id != selectAdminId);
-            setAdmins(newData);
+            const getAllAdmin = async () => {
+              if (!addAdminOpen) {
+                try {
+                  const response = await fetch(
+                    `${process.env.REACT_APP_API}/admin/all`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${dashboardToken}`,
+                      },
+                    }
+                  );
+                  const json = await response.json();
+                  if (!json?.success) {
+                    toggleOn(json?.messages, json?.success);
+                  }
+                  setAdmins(json.data);
+                } catch (error) {}
+              }
+            };
+            getAllAdmin();
           }
         } catch (error) {}
       };
@@ -164,21 +181,31 @@ const Admins = () => {
                           <div className="text-gray-900">{admin.username}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            Active
+                          <span
+                            className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                              admin.deletedAt
+                                ? "text-red-800 bg-red-100"
+                                : "text-green-800 bg-green-100"
+                            } `}
+                          >
+                            {admin.deletedAt && "Pasif"}
+                            {!admin.deletedAt && "Active"}
                           </span>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {admin.type}
                         </td>
                         <td className=" cursor-pointer relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <TrashIcon
-                            onClick={() => {
-                              setOpen(true);
-                              setSelectAdminId(admin.id);
-                            }}
-                            className="text-red-500 hover:text-red-700 w-6"
-                          />
+                          {!admin.deletedAt && (
+                            <TrashIcon
+                              onClick={() => {
+                                setOpen(true);
+                                setSelectAdminId(admin.id);
+                              }}
+                              className="text-red-500 hover:text-red-700 w-6"
+                            />
+                          )}
+                          {admin.deletedAt && <NoSymbolIcon className="text-gray-500 w-6"/>}
                         </td>
                       </tr>
                     ))}

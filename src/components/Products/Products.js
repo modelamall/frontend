@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext } from "react";
+import { Fragment, useState, useContext, useEffect } from "react";
 import {
   Dialog,
   Disclosure,
@@ -28,34 +28,47 @@ function classNames(...classes) {
 const Products = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const { products, setProducts } = useContext(ProductContext);
+  const [products, setProducts] = useState([]);
   const [singel, setSingel] = useState(false);
   const [productId, setProductId] = useState();
+  const [y, setY] = useState(true);
   const { id } = useParams();
   const [categorytId, setCategorytId] = useState(id);
-  const { data, loading, error } = useFetch("product/filter", {
-    method: "post",
-    body: JSON.stringify({
-      categorytId: categorytId,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/product/filter`, {
+            method: "post",
+            body: JSON.stringify({
+              categorytId,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const responseData = await response.json();
+        setProducts(responseData.data);
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
   const {
     data: filtersData,
     loading: filtersLoading,
     error: filtersError,
   } = useFetch(`filter/${categorytId}`);
-  if (!loading) setProducts(data.data);
 
-  const activeFilter = (event) => {
+  const activeFilter = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    fetch("http://localhost:3002/api/v1/product/filter", {
+    const data = await fetch("http://localhost:3002/api/v1/product/filter", {
       method: "post",
       body: formData,
     });
+    const json = await data.json();
+    setProducts(json?.data);
   };
 
   return (
@@ -299,7 +312,15 @@ const Products = () => {
               </button>
 
               <div className="hidden lg:block">
-                <form className="space-y-10 divide-y divide-gray-200">
+                <form onSubmit={activeFilter} className="space-y-10 divide-y divide-gray-200">
+                <input
+                      type="text"
+                      value={categorytId}
+                      name="categorytId"
+                      style={{
+                        display: "none",
+                      }}
+                    />
                   <div className={"pt-10"}>
                     <fieldset>
                       <legend className="block text-sm font-medium text-gray-900">
@@ -343,21 +364,25 @@ const Products = () => {
                         </legend>
                         <div className="space-y-3 pt-6">
                           {section.Property.PropertiesValues.map((option) => (
-                            <div key={option.id} className="flex items-center">
-                              <input
-                                id={`${option.id}`}
-                                name={`op-${option.id}`}
-                                defaultValue={option.value}
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor={`${section.id}`}
-                                className="ml-3 text-sm text-gray-600"
-                              >
-                                {option.value}
-                              </label>
-                            </div>
+                            <div
+                            key={option.id}
+                            className="flex items-center"
+                          >
+                            <input
+                              id={`${option.id}`}
+                              name={`op_${section.Property.id}[]`}
+                              defaultValue={option.id}
+                              value={option.id}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`${option.id}`}
+                              className="ml-3 text-sm text-gray-500"
+                            >
+                              {option.value}
+                            </label>
+                          </div>
                           ))}
                         </div>
                       </fieldset>
@@ -385,19 +410,19 @@ const Products = () => {
               </h2>
 
               <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:gap-x-8 xl:grid-cols-3">
-                {products.map((product) => (
+                {products?.map((product) => (
                   <>
                     <div
-                      key={product.productId}
+                      key={product.id}
                       onClick={() => {
-                        setProductId(product.productId);
+                        setProductId(product.id);
                         setSingel(true);
                       }}
                     >
                       <div className="relative">
                         <div className="relative h-72 w-full overflow-hidden rounded-lg">
                           <img
-                            src={product.url}
+                            src={product.Pictures[0]?.url}
                             alt={product.title}
                             className="h-full w-full object-cover object-center"
                           />
@@ -416,7 +441,7 @@ const Products = () => {
                             className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                           />
                           <p className="relative text-lg font-semibold text-white">
-                            ${product.price}
+                            ${product.ProductVariations[0].price}
                           </p>
                         </div>
                       </div>
