@@ -1,19 +1,8 @@
 import { useContext, useRef, useState } from "react";
-import {
-  Bars3Icon,
-  CalendarIcon,
-  CogIcon,
-  HomeIcon,
-  MagnifyingGlassCircleIcon,
-  MapIcon,
-  MegaphoneIcon,
-  SquaresPlusIcon,
-  UserGroupIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
 import { AuthContext } from "../../context/AuthContext";
 import { NotificationCXT } from "../../context/NotiContext";
+import Address from "../../components/Address/Address";
+
 
 const StoreInfo = () => {
   const { dashboardToken, dashboardUser, setDashboardUser } =
@@ -321,6 +310,9 @@ const StoreInfo = () => {
           </div>
         </div>
       </div>
+      <div>
+            <Address />
+          </div>
     </>
   );
 };

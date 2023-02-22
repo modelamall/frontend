@@ -1,6 +1,6 @@
 const CompanyLogoSection = () => {
   return (
-    <div className="bg-gray-900 py-24 sm:py-32">
+    <div className="bg-gray-800 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
           <img
@@ -18,9 +18,9 @@ const CompanyLogoSection = () => {
             height={48}
           />
           <img
-            className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-            src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Media_Markt_logo.svg"
-            alt="Media MArkt"
+            className="col-span-2 max-h-20 w-full object-contain lg:col-span-1"
+            src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-antivirus-software-policy-library-and-information-34.png"
+            alt="Apple"
             width={158}
             height={48}
           />
@@ -40,7 +40,7 @@ const CompanyLogoSection = () => {
           />
         </div>
         <div className="mt-16 flex justify-center">
-          <p className="relative rounded-full bg-gray-800 px-4 py-1.5 text-sm leading-6 text-gray-300">
+          <p className="relative rounded-full bg-gray-700 px-4 py-1.5 text-sm leading-6 text-gray-300">
             <span className="hidden md:inline">
               Over 2500 companies use our tools to better their business.
             </span>

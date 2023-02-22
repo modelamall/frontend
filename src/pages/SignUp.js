@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { NotificationCXT } from "../context/NotiContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -9,13 +10,15 @@ const SignUp = () => {
     username: "",
     email: "",
     phone: "",
-    gender: "",
+    gender: 1,
     password: "",
     passwordConfirmation: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const {toggleOn } = useContext(NotificationCXT);
+
 
   const createUser = async (formData) => {
     setLoading(true);
@@ -29,7 +32,8 @@ const SignUp = () => {
       });
 
       const json = await res.json();
-      window.alert(json.messages);
+      toggleOn(json?.messages, json?.success);
+
       if (json.success) {
         navigate("/signin");
         setLoading(false);
@@ -54,7 +58,7 @@ const SignUp = () => {
   };
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[url('https://tailwindui.com/img/beams-basic-transparent.png')]">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
        
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -220,7 +224,7 @@ const SignUp = () => {
                         name="gender"
                         type="radio"
                         value={0}
-                        defaultChecked="female"
+                        
                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                       />
                       <label
