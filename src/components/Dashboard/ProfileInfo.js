@@ -1,10 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { NotificationCXT } from "../../context/NotiContext";
+import Address from "../Address/Address";
+import MyAddress from "./MyAddress";
 
 const ProfileInformation = () => {
   const {toggleOn } = useContext(NotificationCXT);
   const { dashboardToken, setDashboardUser, dashboardUser } = useContext(AuthContext);
+  const address = dashboardUser.Address;
   const imgRef = useRef();
 
   const [formData, setFormData] = useState({
@@ -245,6 +248,12 @@ const ProfileInformation = () => {
           </div>
         </div>
       </div>
+      <div>
+          { !address&& <Address storage={"dashboardUser"} user={ dashboardUser } setUser={setDashboardUser} token={dashboardToken} />}
+          </div>
+          <div>
+            { address && <MyAddress/>}
+          </div>
     </>
   );
 };

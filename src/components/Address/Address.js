@@ -1,9 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import { NotificationCXT } from "../../context/NotiContext";
 
-const Address = () => {
-  const { user, setUser, token, dashboardToken } = useContext(AuthContext);
+const Address = ({ user, setUser, token, storage }) => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [provinceId, setProvinceId] = useState(0);
@@ -43,20 +41,19 @@ const Address = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token || dashboardToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formDataObj),
       });
-      console.log(formDataObj);
-
       const json = await res.json();
       toggleOn(json?.messages, json?.success);
 
       if (json.success) {
         const newUser = { ...user };
-        newUser.Addresses.push(json.data);
+        if(storage == "user") newUser.Addresses.push(json.data);
+        else newUser.Address = json.data
         setUser(newUser);
-        localStorage.setItem("user", JSON.stringify(newUser));
+        localStorage.setItem(storage, JSON.stringify(newUser));
         document.getElementById('title').value = '';
         document.getElementById('postCode').value = '';
         document.getElementById('address').value = '';
