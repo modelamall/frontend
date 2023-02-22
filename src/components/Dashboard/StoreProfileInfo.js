@@ -2,12 +2,14 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { NotificationCXT } from "../../context/NotiContext";
 import Address from "../../components/Address/Address";
+import MyAddress from "./MyAddress";
 
 
 const StoreInfo = () => {
   const { dashboardToken, dashboardUser, setDashboardUser } =
     useContext(AuthContext);
   const { toggleOn } = useContext(NotificationCXT);
+  const address = dashboardUser.Address;
 
   const imgRef = useRef();
   const banner = useRef();
@@ -311,7 +313,10 @@ const StoreInfo = () => {
         </div>
       </div>
       <div>
-            <Address />
+          { !address&& <Address storage={"dashboardUser"} user={ dashboardUser } setUser={setDashboardUser} token={dashboardToken} />}
+          </div>
+          <div>
+            { address && <MyAddress/>}
           </div>
     </>
   );

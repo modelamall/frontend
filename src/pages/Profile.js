@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
 
 const PersonalInfo = () => {
-  const { token } = useContext(AuthContext);
+  const { token, setUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) {
@@ -21,7 +21,7 @@ const PersonalInfo = () => {
             <ProfileInformation  />
           </div>
           <div>
-            <Address />
+            <Address  storage={"user"} user={ user } setUser={setUser} token={token} />
           </div>
           <div>
             <UserAddresses  />
