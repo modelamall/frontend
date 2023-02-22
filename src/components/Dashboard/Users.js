@@ -20,6 +20,9 @@ const Users = () => {
           },
         });
         const json = await response.json();
+        if (!json?.success) {
+          toggleOn(json?.messages, json?.success);
+        }
         setUsers(json.data);
       } catch (error) {}
     };

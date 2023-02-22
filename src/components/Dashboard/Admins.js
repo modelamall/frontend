@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Alert from "../Notification/Alert";
 import { NotificationCXT } from "../../context/NotiContext";
+import AddAdmin from "./AddAdmin";
 
 const Admins = () => {
   const { dashboardToken } = useContext(AuthContext);
@@ -11,6 +12,7 @@ const Admins = () => {
   const [open, setOpen] = useState(false);
   const [conformDelete, setConformDelete] = useState(false);
   const [selectAdminId, setSelectAdminId] = useState(0);
+  const [addAdminOpen, setAddAdminOpen] = useState(false);
   useEffect(() => {
     const getAllAdmin = async () => {
       try {
@@ -20,11 +22,36 @@ const Admins = () => {
           },
         });
         const json = await response.json();
+        if (!json?.success) {
+          toggleOn(json?.messages, json?.success);
+        }
         setAdmins(json.data);
       } catch (error) {}
     };
     getAllAdmin();
   }, []);
+  useEffect(() => {
+    const getAllAdmin = async () => {
+      if (!addAdminOpen) {
+        try {
+          const response = await fetch(
+            `${process.env.REACT_APP_API}/admin/all`,
+            {
+              headers: {
+                Authorization: `Bearer ${dashboardToken}`,
+              },
+            }
+          );
+          const json = await response.json();
+          if (!json?.success) {
+            toggleOn(json?.messages, json?.success);
+          }
+          setAdmins(json.data);
+        } catch (error) {}
+      }
+    };
+    getAllAdmin();
+  }, [addAdminOpen]);
   useEffect(() => {
     if (conformDelete) {
       const deleteAdmin = async () => {
@@ -60,6 +87,7 @@ const Admins = () => {
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
+              onClick={() => setAddAdminOpen(true)}
               type="button"
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
@@ -166,6 +194,12 @@ const Admins = () => {
           setConformDelete={setConformDelete}
           open={open}
           setOpen={setOpen}
+        />
+      )}
+      {addAdminOpen && (
+        <AddAdmin
+          addAdminOpen={addAdminOpen}
+          setAddAdminOpen={setAddAdminOpen}
         />
       )}
     </>

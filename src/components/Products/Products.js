@@ -202,7 +202,7 @@ const Products = () => {
                                     >
                                       <input
                                         id={`${option.id}`}
-                                        name={`op_${section.id}[]`}
+                                        name={`op_${section.Property.id}[]`}
                                         defaultValue={option.id}
                                         value={option.id}
                                         type="checkbox"

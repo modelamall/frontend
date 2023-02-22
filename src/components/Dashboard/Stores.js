@@ -20,6 +20,9 @@ const Stores = () => {
           },
         });
         const json = await response.json();
+        if (!json?.success) {
+          toggleOn(json?.messages, json?.success);
+        }
         setStores(json.data);
       } catch (error) {}
     };
