@@ -1,9 +1,12 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { NotificationCXT } from "../../context/NotiContext";
 
 const ProfileInformation = () => {
   const { token, setUser, user } = useContext(AuthContext);
   const imgRef = useRef();
+  const { toggleOn } = useContext(NotificationCXT);
+
 
   const [formData, setFormData] = useState({
     name: user.name,
@@ -33,9 +36,9 @@ const ProfileInformation = () => {
     });
     const json = await res.json();
     localStorage.setItem("user", JSON.stringify(json.data));
+    toggleOn(json?.messages, json?.success);
     if (json.success) {
-      alert(json.messages);
-
+      
       setFormData({
         ...json.data,
         currentPassword: "",

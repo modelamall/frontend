@@ -4,6 +4,7 @@ import ProfileInformation from "../components/UserProfile/ProfileInfo";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router";
+import MyAddresses from "../components/Address/MyAddresses";
 
 const PersonalInfo = () => {
   const { token, setUser, user } = useContext(AuthContext);
@@ -24,7 +25,7 @@ const PersonalInfo = () => {
             <Address  storage={"user"} user={ user } setUser={setUser} token={token} />
           </div>
           <div>
-            <UserAddresses  />
+            <MyAddresses  />
           </div>
         </div>
       ) : null}

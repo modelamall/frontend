@@ -3,32 +3,10 @@ import { Dialog, RadioGroup, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useFetch from "../../hooks/UseFetch";
 import { useNavigate } from "react-router-dom";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
-const product = {
-  name: "Basic Tee 6-Pack ",
-  price: "$192",
-  rating: 3.9,
-  reviewCount: 117,
-  href: "#",
-  imageSrc:
-    "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
-  imageAlt: "Two each of gray, white, and black shirts arranged on table.",
-  colors: [
-    { name: "White", calssName: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", calssName: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", calssName: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "XXL", inStock: true },
-    { name: "XXXL", inStock: false },
-  ],
-};
+import "./style.css";
 
 function classes(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -48,6 +26,9 @@ const PopupProduct = ({ productId, setSingel }) => {
       : data?.data?.Pictures[0]?.url
   );
   const navigate = useNavigate();
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+  const [emblaVariationsRef] = useEmblaCarousel({ loop: true }, [Autoplay()]);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -75,7 +56,7 @@ const PopupProduct = ({ productId, setSingel }) => {
               leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
             >
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
-                <div style={{height: "650px"}} className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
                     type="button"
                     className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
@@ -86,68 +67,50 @@ const PopupProduct = ({ productId, setSingel }) => {
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
-
-                  <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8">
+                  <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8  ">
                     <div className="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                      
-                        {!(
-                          data?.data?.ProductVariations[selectedProduct]
-                            ?.Pictures.length > 0
-                        ) && (
-                          <img
-                            src={
-                              !activeImg
-                                ? data?.data?.Pictures[0]?.url
-                                : activeImg
-                            }
-                            alt={data?.data?.title}
-                            className="object-cover object-center"
-                          />
-                        )}
-                        {data?.data?.ProductVariations[selectedProduct]
-                          ?.Pictures.length > 0 && (
-                          <img
-                            src={
-                              !activeImg
-                                ? data?.data?.ProductVariations[selectedProduct]
-                                    ?.Pictures[0]?.url
-                                : activeImg
-                            }
-                            alt={data?.data?.title}
-                            className="object-cover object-center"
-                          />
-                        )}
-                      {/* <div className="flex flex-row w-full h-1/3 flex-wrap">
-                        {!(
-                          data?.data?.ProductVariations[selectedProduct]
-                            ?.Pictures.length > 0
-                        ) &&
-                          data?.data?.Pictures.map((picture) => {
+                      <div className="embla" ref={emblaRef}>
+                        <div className="embla__container">
+                          {data?.data?.Pictures.map((picture) => {
                             return (
-                              <img
-                                src={picture.url}
-                                alt={data?.data?.title}
-                                className=" h-1/3 w-1/4"
-                                onClick={() => setActiveImg(picture.url)}
-                              />
+                              <div
+                                className="embla__slide object-cover object-center"
+                                key={picture.id}
+                              >
+                                <img
+                                  src={picture.url}
+                                  alt={data?.data?.title}
+                                />
+                              </div>
                             );
                           })}
-                        {data?.data?.ProductVariations[selectedProduct]
-                          ?.Pictures.length > 0 &&
-                          data?.data?.ProductVariations[
-                            selectedProduct
-                          ]?.Pictures.map((picture) => {
-                            return (
-                              <img
-                                src={picture.url}
-                                alt={data?.data?.title}
-                                className="h-1/2 w-1/3"
-                                onClick={() => setActiveImg(picture.url)}
-                              />
-                            );
-                          })}
-                      </div> */}
+                        </div>
+                      </div>
+
+                      {data?.data?.ProductVariations[selectedProduct]?.Pictures
+                        .length > 0 && (
+                        <div className="embla" ref={emblaVariationsRef}>
+                          <div className="embla__container">
+                            {data?.data?.ProductVariations[
+                              selectedProduct
+                            ]?.Pictures.map((picture) => {
+                              return (
+                                <div
+                                  className="embla__slide object-cover object-center"
+                                  key={picture?.id}
+                                >
+                                  <img
+                                    src={picture?.url}
+                                    alt={data?.data?.title}
+                                  />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
+
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
                         {data?.data?.title}
@@ -162,7 +125,8 @@ const PopupProduct = ({ productId, setSingel }) => {
                         </h3>
 
                         <p className="text-2xl text-gray-900">
-                          {data?.data?.ProductVariations[selectedProduct].price}₺
+                          {data?.data?.ProductVariations[selectedProduct].price}
+                          ₺
                         </p>
                         <div className="mt-6">
                           <p>{data?.data?.description}</p>

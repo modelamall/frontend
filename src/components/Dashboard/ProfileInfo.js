@@ -68,7 +68,7 @@ const ProfileInformation = () => {
                 <div className="mx-6 mt-6 flex items-center ">
                   <label htmlFor="avatar">
                     <img
-                      className="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-100 "
+                      className="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-100 cursor-pointer"
                       onClick={() => imgRef.current.click()}
                       src={
                         formData?.avatar
