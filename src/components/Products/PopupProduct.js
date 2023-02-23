@@ -75,7 +75,7 @@ const PopupProduct = ({ productId, setSingel }) => {
               leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
             >
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
-                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                <div style={{height: "650px"}} className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
                     type="button"
                     className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8"
@@ -88,8 +88,8 @@ const PopupProduct = ({ productId, setSingel }) => {
                   </button>
 
                   <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8">
-                    <div className="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg sm:col-span-4 lg:col-span-5">
-                      <div className="gray-100">
+                    <div className="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+                      
                         {!(
                           data?.data?.ProductVariations[selectedProduct]
                             ?.Pictures.length > 0
@@ -117,8 +117,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                             className="object-cover object-center"
                           />
                         )}
-                      </div>
-                      <div className=" flex flex-row">
+                      {/* <div className="flex flex-row w-full h-1/3 flex-wrap">
                         {!(
                           data?.data?.ProductVariations[selectedProduct]
                             ?.Pictures.length > 0
@@ -128,7 +127,7 @@ const PopupProduct = ({ productId, setSingel }) => {
                               <img
                                 src={picture.url}
                                 alt={data?.data?.title}
-                                className="h-100 w-1/4"
+                                className=" h-1/3 w-1/4"
                                 onClick={() => setActiveImg(picture.url)}
                               />
                             );
@@ -142,12 +141,12 @@ const PopupProduct = ({ productId, setSingel }) => {
                               <img
                                 src={picture.url}
                                 alt={data?.data?.title}
-                                className="h-100 w-1/4"
+                                className="h-1/2 w-1/3"
                                 onClick={() => setActiveImg(picture.url)}
                               />
                             );
                           })}
-                      </div>
+                      </div> */}
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
                       <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
