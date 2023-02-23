@@ -10,7 +10,7 @@ import {
     TagIcon,
     UserGroupIcon
 } from '@heroicons/react/24/outline'
-import React, { Suspense } from "react"
+import React, { Suspense} from "react"
 const menuItems = [
     { name: 'Home', to: '/dashboard/home', icon: HomeIcon },
     { name: 'Admins', to: '/dashboard/admins', icon: UserGroupIcon },
@@ -27,8 +27,9 @@ const PersonalInfo = React.lazy(() => import("../../pages/Dashboard/AdminProfile
 const Admins = React.lazy(() => import("./Admins"));
 const Stores = React.lazy(() => import("./Stores"));
 const Users = React.lazy(() => import("./Users"));
+const NotFound = React.lazy(() => import("./NotFound"));
+const Categories = React.lazy(() => import("./Categories"));
 const AdminDashboard = () => {
-    
 
     return (
         <DashboardLayout navigation={menuItems}>
@@ -37,11 +38,11 @@ const AdminDashboard = () => {
                 <Route path="admins" element={<Suspense><Admins/></Suspense>} />
                 <Route path="stores" element={<Suspense><Stores/></Suspense>} />
                 <Route path="users" element={<Suspense><Users/></Suspense>} />
-                <Route path="categories" element={<>Categories</>} />
+                <Route path="categories" element={<Suspense><Categories/></Suspense>} />
                 <Route path="properties" element={<>Properties</>} />
                 <Route path="profile" element={<Suspense><PersonalInfo/></Suspense>} />
                 <Route path="signout" element={<Suspense><DashboardSignOut/></Suspense>} />
-                <Route path="*" element={<>...</>} />
+                <Route path="*" element={<Suspense><NotFound/></Suspense>} />
             </Routes>
         </DashboardLayout>
     )

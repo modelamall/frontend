@@ -20,6 +20,7 @@ const StoreGetProducts = React.lazy(() => import("./StoreGetProducts"));
 const AddProduct = React.lazy(() => import("./AddProduct"));
 const DashboardSignOut = React.lazy(() => import("./DashboardSignOut"));
 const StoreInfo = React.lazy(() => import("./StoreProfileInfo"));
+const NotFound = React.lazy(() => import("./NotFound"));
 
 
 
@@ -27,11 +28,12 @@ const StoreDashboard = () => {
     return (
         <DashboardLayout navigation={menuItems}>
             <Routes>
+                <Route path="/" element={<>Home</>} />
                 <Route path="myproducts" element={<Suspense><StoreGetProducts/></Suspense>} />
                 <Route path="addproducts" element={<Suspense><AddProduct/></Suspense>} />
                 <Route path="profile" element={<Suspense><StoreInfo/></Suspense>} />
                 <Route path="signout" element={<Suspense><DashboardSignOut/></Suspense>} />
-                <Route path="*" element={<>...</>} />
+                <Route path="*" element={<Suspense><NotFound/></Suspense>} />
             </Routes>
         </DashboardLayout>
     )

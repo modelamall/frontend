@@ -7,35 +7,24 @@ const AdminSignIn = React.lazy(() => import("./AdminSignIn"));
 const StoreSignUp = React.lazy(() => import("./StoreSignUp"));
 const StoreSignIn = React.lazy(() => import("./StoreSignIn"));
 
-
-
 const Dashboard = () => {
-  const { dashboardUser, dashboardToken } = useContext(AuthContext);
-  return (
-    <>
-      {dashboardToken && (
-        <Routes>
-          <Route
-            path="*"
-            element={
-              <>
-                {dashboardUser?.type === "Admin" && <AdminDashboard />}
-                {dashboardUser?.type === "Store" && <StoreDashboard />}
-              </>
-            }
-          />
-        </Routes>
-      )}
-      {!dashboardToken && (
+  const { dashboardUser } = useContext(AuthContext);
+  switch (dashboardUser?.type) {
+    case "Admin":
+      return <AdminDashboard />;
+      break;
+    case "Store":
+      return <StoreDashboard />;
+      break;
+    default:
+      return (
         <Routes>
           <Route path="/admin" element={<AdminSignIn />} />
-          <Route path="signin" element={<StoreSignIn/>} />
-          <Route path="*" element={<StoreSignUp/>} />
-
+          <Route path="signin" element={<StoreSignIn />} />
+          <Route path="*" element={<StoreSignUp />} />
         </Routes>
-      )}
-    </>
-  );
+      );
+  }
 };
 
 export default Dashboard;

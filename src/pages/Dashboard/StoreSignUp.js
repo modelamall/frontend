@@ -141,7 +141,7 @@ const StoreSignUp = () => {
               </div>
               <div>
                 <label
-                  htmlFor="phone"
+                  htmlFor="logo"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Your Logo

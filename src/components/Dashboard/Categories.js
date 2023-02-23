@@ -3,22 +3,22 @@ import { AuthContext } from "../../context/AuthContext";
 import { TrashIcon, NoSymbolIcon } from "@heroicons/react/24/outline";
 import Alert from "../Notification/Alert";
 import { NotificationCXT } from "../../context/NotiContext";
-import AddAdmin from "./AddAdmin";
+import AddCategory from "./AddCategory";
 
-const Admins = () => {
+const Categories = () => {
   const { dashboardToken } = useContext(AuthContext);
   const { toggleOn } = useContext(NotificationCXT);
-  const [admins, setAdmins] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
   const [conformDelete, setConformDelete] = useState(false);
-  const [selectAdminId, setSelectAdminId] = useState(0);
-  const [addAdminOpen, setAddAdminOpen] = useState(false);
+  const [selectCategoryId, setSelectCategoryId] = useState(0);
+  const [addCategoryOpen, setAddCategoryOpen] = useState(false);
   useEffect(() => {
-    const getAllAdmin = async () => {
-      if (!addAdminOpen) {
+    const getAllCategory = async () => {
+      if (!addCategoryOpen) {
         try {
           const response = await fetch(
-            `${process.env.REACT_APP_API}/admin/all`,
+            `${process.env.REACT_APP_API}/category/all`,
             {
               headers: {
                 Authorization: `Bearer ${dashboardToken}`,
@@ -29,18 +29,18 @@ const Admins = () => {
           if (!json?.success) {
             toggleOn(json?.messages, json?.success);
           }
-          setAdmins(json.data);
+          setCategories(json.data);
         } catch (error) {}
       }
     };
-    getAllAdmin();
-  }, [addAdminOpen]);
+    getAllCategory();
+  }, [addCategoryOpen]);
   useEffect(() => {
     if (conformDelete) {
-      const deleteAdmin = async () => {
+      const deleteCategory = async () => {
         try {
           const response = await fetch(
-            `${process.env.REACT_APP_API}/admin/${selectAdminId}`,
+            `${process.env.REACT_APP_API}/category/${selectCategoryId}`,
             {
               method: "DELETE",
               headers: {
@@ -52,11 +52,11 @@ const Admins = () => {
           toggleOn(json?.messages, json?.success);
           setConformDelete(false);
           if (json?.success) {
-            const getAllAdmin = async () => {
-              if (!addAdminOpen) {
+            const getAllCategory = async () => {
+              if (!addCategoryOpen) {
                 try {
                   const response = await fetch(
-                    `${process.env.REACT_APP_API}/admin/all`,
+                    `${process.env.REACT_APP_API}/category/all`,
                     {
                       headers: {
                         Authorization: `Bearer ${dashboardToken}`,
@@ -67,15 +67,15 @@ const Admins = () => {
                   if (!json?.success) {
                     toggleOn(json?.messages, json?.success);
                   }
-                  setAdmins(json.data);
+                  setCategories(json.data);
                 } catch (error) {}
               }
             };
-            getAllAdmin();
+            getAllCategory();
           }
         } catch (error) {}
       };
-      deleteAdmin();
+      deleteCategory();
     }
   }, [conformDelete]);
   return (
@@ -83,15 +83,15 @@ const Admins = () => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Admins</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Categories</h1>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
-              onClick={() => setAddAdminOpen(true)}
+              onClick={() => setAddCategoryOpen(true)}
               type="button"
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
-              Add admin
+              Add Category
             </button>
           </div>
         </div>
@@ -112,7 +112,7 @@ const Admins = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        User Name
+                        Parent Name
                       </th>
                       <th
                         scope="col"
@@ -124,7 +124,7 @@ const Admins = () => {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Role
+                        Product Count
                       </th>
                       <th
                         scope="col"
@@ -135,60 +135,61 @@ const Admins = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {admins?.map((admin) => (
-                      <tr key={admin.id}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                    {categories?.map((category) => (
+                      <tr key={category.id}>
+                        <td className="whitespace-nowrap py-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
                               <img
                                 className="h-10 w-10 rounded-full"
                                 src={
-                                  admin.avatar
+                                  category.icon
                                     .split("/")
                                     .findIndex((link) => link == "null") == -1
-                                    ? admin.avatar
+                                    ? category.icon
                                     : "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
                                 }
                                 alt=""
                               />
                             </div>
-                            <div className="ml-4">
-                              <div className="font-medium text-gray-900">
-                                {admin.name}
-                              </div>
-                              <div className="text-gray-500">{admin.email}</div>
+                            <div className="font-medium text-gray-900 ml-4">
+                              {category.name}
                             </div>
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">{admin.username}</div>
+                          <div className="text-gray-900">
+                            {category?.parent ? category?.parent.name : "----"}
+                          </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           <span
                             className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                              admin.deletedAt
+                              category.deletedAt
                                 ? "text-red-800 bg-red-100"
                                 : "text-green-800 bg-green-100"
                             } `}
                           >
-                            {admin.deletedAt && "Pasif"}
-                            {!admin.deletedAt && "Active"}
+                            {category.deletedAt && "Pasif"}
+                            {!category.deletedAt && "Active"}
                           </span>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {admin.type}
+                          {category.productCount}
                         </td>
                         <td className=" cursor-pointer relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          {!admin.deletedAt && (
+                          {!category.deletedAt && (
                             <TrashIcon
                               onClick={() => {
                                 setOpen(true);
-                                setSelectAdminId(admin.id);
+                                setSelectCategoryId(category.id);
                               }}
                               className="text-red-500 hover:text-red-700 w-6"
                             />
                           )}
-                          {admin.deletedAt && <NoSymbolIcon className="text-gray-500 w-6"/>}
+                          {category.deletedAt && (
+                            <NoSymbolIcon className="text-gray-500 w-6" />
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -206,14 +207,14 @@ const Admins = () => {
           setOpen={setOpen}
         />
       )}
-      {addAdminOpen && (
-        <AddAdmin
-          addAdminOpen={addAdminOpen}
-          setAddAdminOpen={setAddAdminOpen}
+      {addCategoryOpen && (
+        <AddCategory
+          addCategoryOpen={addCategoryOpen}
+          setAddCategoryOpen={setAddCategoryOpen}
         />
       )}
     </>
   );
 };
 
-export default Admins;
+export default Categories;
