@@ -25,7 +25,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-white z-50 relative shadow">
+    <header className="bg-white  shadow">
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
         <div className="relative flex h-16 justify-between">
           <div className="relative z-10 flex px-2 lg:px-0">
