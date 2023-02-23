@@ -7,7 +7,7 @@ const HeroSection = () => {
             <h1 className="font text-4xl font-bold tracking-tight text-[#701cdb] sm:text-6xl">
               ModeLaMall
             </h1>
-            <p className="my-20  text-xl text-gray-500">
+            <p className="  text-xl text-gray-500">
               Turn on your shopping MODE!!
             </p>
           </div>

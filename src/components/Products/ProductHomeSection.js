@@ -11,6 +11,7 @@ const ProductHomeSection = () => {
       setProducts(data?.data);
     }
   }, [data]);
+  console.log(data);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
@@ -19,7 +20,7 @@ const ProductHomeSection = () => {
             Newest products
           </h2>
         </div>
-        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+        <div className=" grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
           {products?.map((item, i) => (
             <div key={item.id + "main"}>
               {i < 6 && (
@@ -28,9 +29,9 @@ const ProductHomeSection = () => {
                   to={`product/${item?.id}`}
                   className="group text-sm"
                 >
-                  <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                  <div className="shadow aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                     <img
-                      src={item?.Pictures[0]}
+                      src={item?.Pictures[0].url}
                       alt={item?.name}
                       className="h-full w-full object-cover object-center"
                     />

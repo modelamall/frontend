@@ -39,7 +39,7 @@ const NavBar = () => {
               </Link>
             </div>
           </div>
-          <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+          <div className="relative z-0 flex flex-1 items-center justify-center px-2  sm:inset-0">
             <div className="w-full sm:max-w-lg">
               <label htmlFor="search" className="sr-only">
                 Search
@@ -107,7 +107,9 @@ const NavBar = () => {
                       alt=""
                     />
                   </button>
+                   
                 </div>
+                
 
                 {open && (
                   <div
@@ -212,9 +214,11 @@ const NavBar = () => {
                   <img
                     className="h-10 w-10 rounded-full"
                     src={
-                      user?.avatar
-                        ? user?.avatar
-                        : "https://aui.atlassian.com/aui/latest/docs/images/avatar-person.svg"
+                      user.avatar
+                        .split("/")
+                        .findIndex((link) => link == "null") == -1
+                        ? user.avatar
+                        : "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
                     }
                     alt=""
                   />
