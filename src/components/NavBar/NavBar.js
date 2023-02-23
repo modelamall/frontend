@@ -1,5 +1,5 @@
 import useFetch from "../../hooks/UseFetch";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -15,9 +15,13 @@ const NavBar = () => {
   const { user, token } = useContext(AuthContext);
 
   const { data, loading } = useFetch("category/allcategories");
-  if (!loading) {
-    setCategory(data.data);
-  }
+
+  useEffect(() => {
+    if (!loading) {
+      setCategory(data?.data);
+    }
+  }, [data]);
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -167,7 +171,7 @@ const NavBar = () => {
           {category.map((item) => {
             return (
               <NavLink
-                classNameName={({ isActive }) =>
+                className={({ isActive }) =>
                   isActive
                     ? "bg-gray-100 text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
                     : "text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"

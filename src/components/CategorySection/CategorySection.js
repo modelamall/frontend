@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFetch from "../../hooks/UseFetch";
 import { useContext } from "react";
 import { CategoryContext } from "../../context/CategoryContext";
@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 function CategorySection() {
   const { category, setCategory } = useContext(CategoryContext);
   const { data, loading, error } = useFetch("category/allcategories");
-  if (!loading) {
-    setCategory(data.data);
-  }
+  useEffect(() => {
+    if (!loading) {
+      setCategory(data?.data);
+    }
+  }, [data]);
 
   return (
     <>
