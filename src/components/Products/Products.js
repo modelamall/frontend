@@ -26,22 +26,24 @@ function classNames(...classes) {
 }
 
 const Products = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [singel, setSingel] = useState(false);
   const [productId, setProductId] = useState();
-  const [y, setY] = useState(true);
   const { id } = useParams();
   const [categorytId, setCategorytId] = useState(id);
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
+    setCategorytId(id);
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API}/product/filter`, {
+          `${process.env.REACT_APP_API}/product/filter`,
+          {
             method: "post",
             body: JSON.stringify({
-              categorytId,
+              categorytId: id,
             }),
             headers: {
               "Content-Type": "application/json",
@@ -52,8 +54,18 @@ const Products = () => {
         setProducts(responseData.data);
       } catch (error) {}
     };
+    const parentCategory = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API}/category/parents/${id}`
+        );
+        const responseData = await response.json();
+        setCategories(responseData.data);
+      } catch (error) {}
+    };
     fetchData();
-  }, []);
+    parentCategory();
+  }, [id]);
   const {
     data: filtersData,
     loading: filtersLoading,
@@ -257,15 +269,19 @@ const Products = () => {
             className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
           >
             <ol role="list" className="flex items-center space-x-4 py-4">
-              {breadcrumbs.map((breadcrumb) => (
-                <li key={breadcrumb.id}>
+
+            <li className="text-sm">
+                <a
+                  href="/"
+                  aria-current="page"
+                  className="font-medium text-gray-500 hover:text-gray-600"
+                >
+                  Home
+                </a>
+              </li>
+              {categories.map((category) => (
+                <li key={category.id}>
                   <div className="flex items-center">
-                    <a
-                      href={breadcrumb.href}
-                      className="mr-4 text-sm font-medium text-gray-900"
-                    >
-                      {breadcrumb.name}
-                    </a>
                     <svg
                       viewBox="0 0 6 20"
                       aria-hidden="true"
@@ -276,18 +292,15 @@ const Products = () => {
                         fill="currentColor"
                       />
                     </svg>
+                    <a
+                      href={`/product/category/${category.id}`}
+                      className="ml-4 text-sm font-medium text-gray-900"
+                    >
+                      {category.name}
+                    </a>
                   </div>
                 </li>
               ))}
-              <li className="text-sm">
-                <a
-                  href="#"
-                  aria-current="page"
-                  className="font-medium text-gray-500 hover:text-gray-600"
-                >
-                  New Arrivals
-                </a>
-              </li>
             </ol>
           </nav>
         </div>
@@ -312,15 +325,18 @@ const Products = () => {
               </button>
 
               <div className="hidden lg:block">
-                <form onSubmit={activeFilter} className="space-y-10 divide-y divide-gray-200">
-                <input
-                      type="text"
-                      value={categorytId}
-                      name="categorytId"
-                      style={{
-                        display: "none",
-                      }}
-                    />
+                <form
+                  onSubmit={activeFilter}
+                  className="space-y-10 divide-y divide-gray-200"
+                >
+                  <input
+                    type="text"
+                    value={categorytId}
+                    name="categorytId"
+                    style={{
+                      display: "none",
+                    }}
+                  />
                   <div className={"pt-10"}>
                     <fieldset>
                       <legend className="block text-sm font-medium text-gray-900">
@@ -364,25 +380,22 @@ const Products = () => {
                         </legend>
                         <div className="space-y-3 pt-6">
                           {section.Property.PropertiesValues.map((option) => (
-                            <div
-                            key={option.id}
-                            className="flex items-center"
-                          >
-                            <input
-                              id={`${option.id}`}
-                              name={`op_${section.Property.id}[]`}
-                              defaultValue={option.id}
-                              value={option.id}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor={`${option.id}`}
-                              className="ml-3 text-sm text-gray-500"
-                            >
-                              {option.value}
-                            </label>
-                          </div>
+                            <div key={option.id} className="flex items-center">
+                              <input
+                                id={`${option.id}`}
+                                name={`op_${section.Property.id}[]`}
+                                defaultValue={option.id}
+                                value={option.id}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              />
+                              <label
+                                htmlFor={`${option.id}`}
+                                className="ml-3 text-sm text-gray-500"
+                              >
+                                {option.value}
+                              </label>
+                            </div>
                           ))}
                         </div>
                       </fieldset>
