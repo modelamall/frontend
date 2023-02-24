@@ -35,12 +35,12 @@ function CategorySection() {
                           to={`/product/category/${item.id}`}
                           className="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                         >
-                          <span aria-hidden="true" className="absolute inset-0">
+                          <span aria-hidden="true" className="absolute inset-0 ">
                             <img
                               src={
                                 item?.icon
                                   ? item?.icon
-                                  : "https://ticari.tarkett.com.tr/media/img/M/TH_26513016_001.jpg"
+                                  : "https://tailwindui.com/img/beams-basic-transparent.png"
                               }
                               alt={item.name}
                               className="h-full w-full object-cover object-center"

@@ -16,6 +16,7 @@ const menuItems = [
     { name: 'Sign Out', to: '/dashboard/signout', icon: ArrowLeftOnRectangleIcon },
 
 ]
+const DashboardHome = React.lazy(() => import("./DashboardHome"));
 const StoreGetProducts = React.lazy(() => import("./StoreGetProducts"));
 const AddProduct = React.lazy(() => import("./AddProduct"));
 const DashboardSignOut = React.lazy(() => import("./DashboardSignOut"));
@@ -28,7 +29,7 @@ const StoreDashboard = () => {
     return (
         <DashboardLayout navigation={menuItems}>
             <Routes>
-                <Route path="/" element={<>Home</>} />
+                <Route path="/" element={<Suspense><DashboardHome/></Suspense>} />
                 <Route path="myproducts" element={<Suspense><StoreGetProducts/></Suspense>} />
                 <Route path="addproducts" element={<Suspense><AddProduct/></Suspense>} />
                 <Route path="profile" element={<Suspense><StoreInfo/></Suspense>} />

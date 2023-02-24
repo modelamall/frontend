@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HeroSection = () => {
   return (
     <div className="relative overflow-hidden bg-white bg-[url('https://tailwindui.com/img/beams-basic-transparent.png')]">
@@ -79,12 +81,7 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <button
-                href="#"
-                className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700 "
-              >
-                Browse All Products
-              </button>
+              
             </div>
           </div>
         </div>

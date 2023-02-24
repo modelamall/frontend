@@ -25,6 +25,7 @@ const menuItems = [
 const DashboardSignOut = React.lazy(() => import("./DashboardSignOut"));
 const PersonalInfo = React.lazy(() => import("../../pages/Dashboard/AdminProfile"));
 const Admins = React.lazy(() => import("./Admins"));
+const DashboardHome = React.lazy(() => import("./DashboardHome"));
 const Stores = React.lazy(() => import("./Stores"));
 const Users = React.lazy(() => import("./Users"));
 const NotFound = React.lazy(() => import("./NotFound"));
@@ -34,7 +35,7 @@ const AdminDashboard = () => {
     return (
         <DashboardLayout navigation={menuItems}>
             <Routes>
-                <Route path="home" element={<>Home</>} />
+                <Route path="home" element={<Suspense><DashboardHome/></Suspense>} />
                 <Route path="admins" element={<Suspense><Admins/></Suspense>} />
                 <Route path="stores" element={<Suspense><Stores/></Suspense>} />
                 <Route path="users" element={<Suspense><Users/></Suspense>} />

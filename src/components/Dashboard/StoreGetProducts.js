@@ -16,7 +16,7 @@ const StoreGetProducts = () => {
 
   return (
     <>
-    {data?.length > 0 && <div>
+    {data?.data.length > 0 && <div>
       <div className="mx-5 py-5 px-4 sm:py-24 sm:px-6 lg:px-0">
         <h1 className="text-left text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Your Products
@@ -32,7 +32,7 @@ const StoreGetProducts = () => {
                 >
                   <div className="flex-shrink-0 py-6 px-6">
                     <img
-                      src={product?.Pictures[0]}
+                      src={product?.Pictures[0].url}
                       alt={product?.title}
                       className="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
                     />
@@ -84,7 +84,7 @@ const StoreGetProducts = () => {
         </form>
       </div>
     </div>}
-    {!(data?.length > 0) && 
+    {!(data?.data.length > 0) && 
     <NoDataAlert/>
     }
     </>

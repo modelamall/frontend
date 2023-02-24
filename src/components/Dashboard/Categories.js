@@ -147,7 +147,7 @@ const Categories = () => {
                                     .split("/")
                                     .findIndex((link) => link == "null") == -1
                                     ? category.icon
-                                    : "https://cdn.lyft.com/riderweb/_next/static/media/default-avatar.27830b47.png"
+                                    : "https://static.thenounproject.com/png/87338-200.png"
                                 }
                                 alt=""
                               />
