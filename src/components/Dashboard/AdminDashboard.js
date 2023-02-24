@@ -18,6 +18,7 @@ const menuItems = [
     { name: 'Users', to: '/dashboard/users', icon: UsersIcon },
     { name: 'Categories', to: '/dashboard/categories', icon: TagIcon },
     { name: 'Properties', to: '/dashboard/properties', icon: SwatchIcon },
+    { name: 'Property Values', to: '/dashboard/property-values', icon: SwatchIcon },
     { name: 'Profile', to: '/dashboard/profile', icon: UserIcon },
     { name: 'Sign Out', to: '/dashboard/signout', icon: ArrowLeftOnRectangleIcon },
 
@@ -30,6 +31,7 @@ const Users = React.lazy(() => import("./Users"));
 const NotFound = React.lazy(() => import("./NotFound"));
 const Categories = React.lazy(() => import("./Categories"));
 const Properties = React.lazy(() => import("./Properties"));
+const PropertyValues = React.lazy(() => import("./PropertyValues"));
 const AdminDashboard = () => {
 
     return (
@@ -41,6 +43,7 @@ const AdminDashboard = () => {
                 <Route path="users" element={<Suspense><Users/></Suspense>} />
                 <Route path="categories" element={<Suspense><Categories/></Suspense>} />
                 <Route path="properties" element={<Suspense><Properties/></Suspense>} />
+                <Route path="property-values" element={<Suspense><PropertyValues/></Suspense>} />
                 <Route path="profile" element={<Suspense><PersonalInfo/></Suspense>} />
                 <Route path="signout" element={<Suspense><DashboardSignOut/></Suspense>} />
                 <Route path="*" element={<Suspense><NotFound/></Suspense>} />
