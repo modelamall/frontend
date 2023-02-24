@@ -11,6 +11,7 @@ const StoreSignUp = () => {
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  let fileReader = null
   const handleFileDelete = () => {
     setSelectedFile(null);
     fileInputRef.current.value = "";
@@ -151,12 +152,20 @@ const StoreSignUp = () => {
                     ref={fileInputRef}
                     onChange={(e) => {
                       setSelectedFile(e.target.files[0]);
+
+                      fileReader = new FileReader()
+                      fileReader.readAsDataURL(e.target.files[0])
+                      fileReader.addEventListener("load", ()=>{
+                        setSelectedFile(fileReader.result)
+                      })
                     }}
                     id="logo"
                     name="logo"
                     type="file"
                     style={{ display: "none" }}
                   />
+                   <img className="logo image z-40"  src={selectedFile}/>
+                  
                   <button
                     onClick={() => {
                       fileInputRef.current.click();
