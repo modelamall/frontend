@@ -29,6 +29,7 @@ const Stores = React.lazy(() => import("./Stores"));
 const Users = React.lazy(() => import("./Users"));
 const NotFound = React.lazy(() => import("./NotFound"));
 const Categories = React.lazy(() => import("./Categories"));
+const Properties = React.lazy(() => import("./Properties"));
 const AdminDashboard = () => {
 
     return (
@@ -39,7 +40,7 @@ const AdminDashboard = () => {
                 <Route path="stores" element={<Suspense><Stores/></Suspense>} />
                 <Route path="users" element={<Suspense><Users/></Suspense>} />
                 <Route path="categories" element={<Suspense><Categories/></Suspense>} />
-                <Route path="properties" element={<>Properties</>} />
+                <Route path="properties" element={<Suspense><Properties/></Suspense>} />
                 <Route path="profile" element={<Suspense><PersonalInfo/></Suspense>} />
                 <Route path="signout" element={<Suspense><DashboardSignOut/></Suspense>} />
                 <Route path="*" element={<Suspense><NotFound/></Suspense>} />
