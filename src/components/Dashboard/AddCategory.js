@@ -32,6 +32,7 @@ const AddCategory = ({ addCategoryOpen, setAddCategoryOpen }) => {
       setCategoryData(categoriesList);
       setCategoryId(categoryt_Id);
     }
+    setDefaultProperties([])
   };
   const AddProperty = (id) => {
     const selectedPropertiesList = [...selectedProperties];
