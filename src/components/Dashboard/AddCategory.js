@@ -327,7 +327,7 @@ const AddCategory = ({ addCategoryOpen, setAddCategoryOpen }) => {
                         {defaultProperties.map((defaultProperty) => (
                           <input
                             type="text"
-                            value={defaultProperty.id}
+                            value={defaultProperty.Property.id}
                             name="filter[]"
                             style={{
                               display: "none",
